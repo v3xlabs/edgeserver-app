@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:lvksh/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2021
+    },
+    "ignorePatterns": [
+        "!**/*"
+    ],
+    "plugins": [
+        "lvksh"
+    ],
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "avoidEscape": true
+    }
+}
