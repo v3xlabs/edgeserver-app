@@ -2,11 +2,12 @@ import { FC } from 'react';
 import Logo from '../logo/Logo';
 import styled from 'styled-components';
 import Link from 'next/link';
+import {Button} from '../button/Button';
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 80px;
-    background: ${(t)=>t.theme.colors.background};
+    height: ${({theme}) => theme.navbar.height};
+    background: ${({theme}) => theme.navbar.background};
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,6 +33,7 @@ const NavBar: FC = () => {
                 <NavItem href="/">Hello</NavItem>
             </NavSide>
             <NavSide>
+                <Button>Login</Button>
                 Login
             </NavSide>
         </Wrapper>

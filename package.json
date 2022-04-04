@@ -11,6 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@primer/css": "^19.8.0",
+    "@primer/react": "^35.1.0",
     "i18next": "^21.6.14",
     "jest": "^27.5.1",
     "next": "12.1.4",
