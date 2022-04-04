@@ -16,3 +16,7 @@ a {
   margin: 0;
   padding: 0;
 }
+
+:root {
+  font-size: 14px;
+}

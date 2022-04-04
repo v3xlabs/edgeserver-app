@@ -1,7 +1,7 @@
 import { DefaultTheme }from 'styled-components';
 
 const Color = {
-  Line: '#3333D47',
+  Line: '#333D47',
   TextSecond: '#D3DEE8',
   TextPrimary: '#FFFFFF',
   Darkest: '#0e171f',
@@ -22,7 +22,11 @@ const Theme: DefaultTheme = {
   },
   navbar: {
     background: Color.Dark,
-    height: '80px'
+    height: '80px',
+    text: {
+      primary: Color.TextPrimary,
+      secondary: Color.TextSecond
+    }
   },
   text: {
     primary: Color.TextPrimary,

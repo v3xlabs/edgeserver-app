@@ -1,19 +1,18 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from "styled-components";
-import { Default as Theme } from "../themes";
+import { Default as Theme, Light } from "../themes";
 import {GlobalStyle} from '../common/utils/globalStyle';
 
 import { appWithI18Next } from 'ni18n'
 import { ni18nConfig } from '../../ni18n.config'
-import {ThemeProvider as PrimerThemeProvider} from '@primer/react';
+import NavBar from '../common/components/navbar/NavBar';
 
 const SignalEdge = ({ Component, pageProps }: AppProps) => (
-    <ThemeProvider theme={Theme}>
-        <PrimerThemeProvider>
+    <ThemeProvider theme={Light}>
         <GlobalStyle />
+        <NavBar />
         <Component {...pageProps} />
-        </PrimerThemeProvider>
     </ThemeProvider>
 );
 

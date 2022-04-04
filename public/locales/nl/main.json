@@ -1,6 +1,12 @@
 {
-  "test": {
-    "hi": "dutch"
+  "settings": {
+    "language": "Dutch",
+    "description": "Een webhostingplatform"
   },
-  "generated-by-create-next-app": ""
+  "navbar": {
+    "login": "Inloggen",
+    "dashboard": "Dashboard",
+    "projects": "Projecten",
+    "settings": "Instellingen"
+  }
 }

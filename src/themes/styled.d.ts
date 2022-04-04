@@ -19,6 +19,10 @@ declare module 'styled-components' {
     navbar: {
         background: string, // Background Color
         height: string // Height in px
+        text: {
+          primary: string,
+          secondary: string
+        }
     },
     text: {
       primary: string,

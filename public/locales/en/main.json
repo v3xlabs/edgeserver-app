@@ -1,6 +1,12 @@
 {
-  "test": {
-    "hi": "english"
+  "settings": {
+    "language": "English",
+    "description": "A webhosting platform"
   },
-  "generated-by-create-next-app": ""
+  "navbar": {
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "settings": "Preferences"
+  }
 }
