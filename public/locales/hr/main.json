@@ -1,0 +1,12 @@
+{
+  "navbar": {
+    "dashboard": "Nadzorna ploča",
+    "login": "Prijava",
+    "projects": "Projekti",
+    "settings": "Postavke"
+  },
+  "settings": {
+    "description": "Platforma za web hosting",
+    "language": "Hrvatski"
+  }
+}

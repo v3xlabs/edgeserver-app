@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const Flags = {
     'en': '🇺🇸',
     'nl': '🇳🇱',
+    'hr': '🇭🇷',
 }
 
 export const Wrapper = styled.select`
