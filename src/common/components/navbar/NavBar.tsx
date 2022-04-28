@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '../button/Button';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../language-switcher/LanguageSwitcher';
+import { UserProfile } from '../user-profile/UserProfile';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -51,7 +52,7 @@ const NavBar: FC = () => {
             </NavSide>
             <NavSide>
                 <LanguageSwitcher />
-                <Button label={t('navbar.login')} variant="primary" />
+                <UserProfile />
             </NavSide>
         </Wrapper>
     );

@@ -7,7 +7,10 @@ const nextConfig = {
   },
   compiler: {
     styledComponents: true
-  }
+  },
+  images: {
+    domains: ['gateway.ipfs.io'],
+  },
 }
 
 module.exports = nextConfig

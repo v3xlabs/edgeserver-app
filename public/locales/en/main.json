@@ -8,5 +8,8 @@
     "dashboard": "Dashboard",
     "projects": "Projects",
     "settings": "Preferences"
+  },
+  "projects": {
+    "title": "Projects"
   }
 }
