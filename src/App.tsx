@@ -23,13 +23,11 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
-
     return (
         <Wrapper>
             <GlobalStyle />
-            <div>
-                Hello World
-            </div>
+            <div>Hello World</div>
+            <h1 className="text-3xl font-bold underline">Hello world!</h1>
         </Wrapper>
-    )
+    );
 };
