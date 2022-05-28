@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { Default as Theme, Light } from '../themes';
@@ -7,40 +7,49 @@ import { GlobalStyle } from '../common/utils/globalStyle';
 import { appWithI18Next } from 'ni18n';
 import { ni18nConfig } from '../../ni18n.config';
 import NavBar from '../common/components/navbar/NavBar';
-import { providers } from 'ethers'
 import '@rainbow-me/rainbowkit/styles.css'
-import { WagmiProvider, chain } from 'wagmi'
+import { chain, WagmiConfig, createClient, configureChains } from 'wagmi'
 import {
-	RainbowKitProvider,
-	Chain,
+  RainbowKitProvider,
 	getDefaultWallets,
-	connectorsForWallets,
 } from '@rainbow-me/rainbowkit'
+import { publicProvider } from 'wagmi/providers/public';
+import { LoginFacade } from './login';
 
-const chains: Chain[] = [{ ...chain.mainnet, name: 'Ethereum' }]
-const provider = () => new providers.InfuraProvider(1, process.env.NEXT_PUBLIC_INFURA_ID)
 
-const wallets = getDefaultWallets({
-	chains,
-	appName: 'contract.house',
-	infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-	jsonRpcUrl: chain.mainnet.rpcUrls[0],
-})
+const { chains, provider } = configureChains(
+    [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
+    [
+    //   alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }),
+      publicProvider()
+    ]
+  );
+  
+  const { connectors } = getDefaultWallets({
+    appName: 'Signal Edge',
+    chains
+  });
+  
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider
+  })
 
 const SignalEdge = ({ Component, pageProps }: AppProps) => (
-    <WagmiProvider
-        autoConnect
-        connectors={connectorsForWallets(wallets)}
-        provider={provider}
+    <WagmiConfig
+    client={wagmiClient}
     >
         <RainbowKitProvider chains={chains}>
             <ThemeProvider theme={Light}>
                 <GlobalStyle />
-                <NavBar />
-                <Component {...pageProps} />
+                <LoginFacade>
+                  <NavBar />
+                  <Component {...pageProps} />
+                </LoginFacade>
             </ThemeProvider>
         </RainbowKitProvider>
-    </WagmiProvider>
+    </WagmiConfig>
 );
 
 export default appWithI18Next(SignalEdge, ni18nConfig);

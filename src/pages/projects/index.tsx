@@ -15,6 +15,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <h1>{t('projects.title')}</h1>
+
         </PageWrapper>
     );
 };
