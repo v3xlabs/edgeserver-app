@@ -1,5 +1,3 @@
-import '@rainbow-me/rainbowkit/dist/index.css';
-
 import {
     darkTheme,
     getDefaultWallets,
