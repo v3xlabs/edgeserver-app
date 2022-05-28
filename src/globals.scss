@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background: #fefefe;
+html, body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-family: monospace, sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+:root {
+    font-size: 16px;
 }
