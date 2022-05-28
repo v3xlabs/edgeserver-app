@@ -1,16 +1,12 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { FC } from 'react';
-import { useAccount } from 'wagmi';
+
+import { Login } from '../pages/Login';
+import { useAuth } from '../utils/useAuth';
 
 export const LoginFacade: FC = ({ children }) => {
-    const { isSuccess, data } = useAccount();
+    const { state } = useAuth();
 
-    if (!isSuccess || !data)
-        return (
-            <div>
-                You need to log in <ConnectButton />
-            </div>
-        );
+    if (state !== 'authenticated') return <Login />;
 
     return <>{children}</>;
 };

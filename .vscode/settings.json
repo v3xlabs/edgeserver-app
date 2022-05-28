@@ -7,7 +7,6 @@
     ".gitignore": true,
     "yarn.lock": true,
     ".editorconfig": true,
-    "assets/.gitkeep": true,
-    "src/index.tsx": true
+    "assets/.gitkeep": true
   }
 }

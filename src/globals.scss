@@ -2,16 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 16px;
+}
+
+html,
+body {
     width: 100vw;
     height: 100vh;
     padding: 0;
     margin: 0;
-    font-family: monospace, sans-serif;
+    // font-family: monospace, sans-serif;
+    font-family: "Inter", monospace, sans-serif;
 }
-* {
-    box-sizing: border-box;
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
-:root {
-    font-size: 16px;
+
+.card {
+    @apply border-neutral-400 dark:border-neutral-700 border-2 rounded-2xl;
+}
+
+.hvr-hover {
+    .hvr-regular {
+        display: block;
+    }
+    .hvr-alt {
+        display: none;
+    }
+
+    &:hover {
+        .hvr-regular {
+            display: none;
+        }
+        .hvr-alt {
+            display: block;
+        }
+    }
 }
