@@ -1,0 +1,21 @@
+{
+    "name": "template-react",
+    "version": "1.0.0",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "styled-components": "^5.3.3"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.36",
+        "@types/react-dom": "^17.0.11",
+        "@types/styled-components": "^5.1.15",
+        "parcel": "^2.0.1",
+        "typescript": "^4.5.2"
+    },
+    "scripts": {
+        "start": "parcel src/index.html",
+        "build": "parcel build src/index.html"
+    }
+}
