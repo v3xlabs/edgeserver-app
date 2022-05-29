@@ -27,7 +27,8 @@ export const LoginStepTwo: FC = () => {
         isLoading: signIsLoading,
         reset: resetSignage,
     } = useSignMessage({
-        message: 'hello world',
+        message:
+            'This is a temporary message to demonstrate what logging in at edgeserver.io could be like. This message serves no other purpose and shall not be treated as anything other then text.',
         onSuccess: (data, _variables) => {
             console.log('Successfully added', data);
             setToken(data);
