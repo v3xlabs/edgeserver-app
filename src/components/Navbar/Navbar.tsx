@@ -27,7 +27,7 @@ export const Navbar: FC = () => {
         >
             <div className="w-full max-w-4xl mx-auto flex flex-col gap-2">
                 <div className="flex gap-4 container mx-auto w-full">
-                    <img src={icon} alt="Signal Icon" />
+                    <img src={icon} alt="Signal Icon" className="flex-0" />
                     <ProjectSelector />
                     <div className="ml-auto">
                         <UserProfile />
