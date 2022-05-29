@@ -21,7 +21,7 @@ export const useJWT = create(
 
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
-    const { data, isSuccess } = useAccount();
+    const { data, isSuccess, status } = useAccount();
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
