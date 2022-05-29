@@ -22,7 +22,7 @@ const links: {
 export const Navbar: FC = () => {
     return (
         <div
-            className="w-full p-4
+            className="w-full p-4 pb-0
             bg-black-900 border-b-2 border-neutral-700"
         >
             <div className="w-full max-w-4xl mx-auto flex flex-col gap-2">
