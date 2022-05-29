@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useAuth } from '../utils/useAuth';
+import { useAuth } from '../../utils/useAuth';
 import { LoginStepOne } from './StepOne';
 import { LoginStepTwo } from './StepTwo';
 

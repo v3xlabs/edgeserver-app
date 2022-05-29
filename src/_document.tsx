@@ -4,6 +4,7 @@ import {
     getDefaultWallets,
     RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import { BrowserRouter } from 'react-router-dom';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -49,11 +50,13 @@ export const Document = () => {
                     learnMoreUrl: 'https://edgeserver.io/',
                 }}
             >
-                <div className="dark:bg-black-800 dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
-                    <LoginFacade>
-                        <App />
-                    </LoginFacade>
-                </div>
+                <BrowserRouter>
+                    <div className="dark:bg-black-800 dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
+                        <LoginFacade>
+                            <App />
+                        </LoginFacade>
+                    </div>
+                </BrowserRouter>
             </RainbowKitProvider>
         </WagmiConfig>
     );

@@ -1,15 +1,18 @@
 import { FC } from 'react';
+import { Route, Routes } from 'react-router';
 
-import { DisconnectButton } from './components/DisconnectButton';
 import { Navbar } from './components/Navbar/Navbar';
+import { Home } from './pages';
+import { Projects } from './pages/projects';
 
 export const App: FC = () => {
     return (
         <div>
             <Navbar />
-            <div className="m-8">
-                <DisconnectButton />
-            </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="projects" element={<Projects />} />
+            </Routes>
         </div>
     );
 };

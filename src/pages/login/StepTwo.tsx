@@ -2,15 +2,14 @@ import { FC } from 'react';
 import {
     useAccount,
     useConnect,
-    useDisconnect,
     useEnsAvatar,
     useEnsName,
     useSignMessage,
 } from 'wagmi';
-import { DisconnectButton } from '../components/DisconnectButton';
 
-import { capitalizeFirstLetter } from '../utils/capitalize';
-import { useJWT } from '../utils/useAuth';
+import { DisconnectButton } from '../../components/DisconnectButton';
+import { capitalizeFirstLetter } from '../../utils/capitalize';
+import { useJWT } from '../../utils/useAuth';
 
 export const LoginStepTwo: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -29,7 +28,7 @@ export const LoginStepTwo: FC = () => {
         reset: resetSignage,
     } = useSignMessage({
         message: 'hello world',
-        onSuccess: (data, variables) => {
+        onSuccess: (data, _variables) => {
             console.log('Successfully added', data);
             setToken(data);
         },

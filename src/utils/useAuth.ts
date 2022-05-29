@@ -21,7 +21,12 @@ export const useJWT = create(
 
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
-    const { data, isSuccess, status } = useAccount();
+    const { data, isLoading, isSuccess } = useAccount();
+
+    if (isLoading && token) return { state: 'loading-alt' };
+
+    // if (isLoading) return { state: 'loading' };
+    if (isLoading) return { state: 'loading' };
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
