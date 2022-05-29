@@ -11,6 +11,7 @@
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
         "sass": "^1.52.1",
+        "siwe": "2.0.3",
         "styled-components": "^5.3.3",
         "tailwindcss": "^3.0.24",
         "wagmi": "^0.4.3",

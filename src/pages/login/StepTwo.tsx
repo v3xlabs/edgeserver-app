@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { SiweMessage } from 'siwe';
 import {
     useAccount,
     useConnect,
@@ -21,17 +22,23 @@ export const LoginStepTwo: FC = () => {
     const { data: ENSName } = useEnsName({ address: Wallet?.address });
 
     const { activeConnector } = useConnect();
-
+    const payload = {
+        domain: window.location.host,
+        address: Wallet.address,
+        statement: 'Sign in with Ethereum to the app.',
+        chainId: 137,
+        uri: window.location.origin,
+        version: '1',
+    };
+    const message = new SiweMessage(payload);
     const {
         signMessage,
         isLoading: signIsLoading,
         reset: resetSignage,
     } = useSignMessage({
-        message:
-            'This is a temporary message to demonstrate what logging in at edgeserver.io could be like. This message serves no other purpose and shall not be treated as anything other then text.',
-        onSuccess: (data, _variables) => {
-            console.log('Successfully added', data);
-            setToken(data);
+        message: message.prepareMessage(),
+        onSuccess: async (data, _variables) => {
+            console.log('Successfully added,', data, JSON.stringify(message));
         },
     });
 
