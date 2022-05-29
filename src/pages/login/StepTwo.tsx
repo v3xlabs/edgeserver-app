@@ -1,4 +1,3 @@
-import gradientAvatar from 'gradient-avatar';
 import { FC } from 'react';
 import { SiweMessage } from 'siwe';
 import {
@@ -12,6 +11,7 @@ import {
 import { DisconnectButton } from '../../components/DisconnectButton';
 import { capitalizeFirstLetter } from '../../utils/capitalize';
 import { formatAddress } from '../../utils/formatAddress';
+import { gradientAvatar } from '../../utils/gradientAvatar';
 import { useJWT } from '../../utils/useAuth';
 
 export const LoginStepTwo: FC = () => {
