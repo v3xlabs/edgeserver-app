@@ -10,7 +10,7 @@ export const LoginStepOne: FC = () => {
                     return (
                         <button
                             onClick={openConnectModal}
-                            className="w-full bg-accent-blue-normal text-white px-16 py-5 rounded-lg font-bold text-md justify-center items-center flex gap-4"
+                            className="bluebutton w-full px-16 py-5 rounded-lg font-bold text-md justify-center items-center flex gap-4"
                         >
                             <img
                                 className="w-5 block"

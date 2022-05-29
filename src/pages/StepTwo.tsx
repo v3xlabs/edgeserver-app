@@ -70,7 +70,7 @@ export const LoginStepTwo: FC = () => {
                     </button>
                 ) : (
                     <button
-                        className="w-full bg-accent-blue-normal text-white px-16 py-5 rounded-lg font-bold text-md justify-center items-center flex gap-4"
+                        className="w-full bluebutton px-16 py-5 rounded-lg font-bold text-md justify-center items-center flex gap-4"
                         onClick={() => signMessage()}
                     >
                         Authorize Device
