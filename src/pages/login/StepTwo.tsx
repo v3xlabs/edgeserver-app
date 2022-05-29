@@ -12,6 +12,7 @@ import { DisconnectButton } from '../../components/DisconnectButton';
 import { capitalizeFirstLetter } from '../../utils/capitalize';
 import { formatAddress } from '../../utils/formatAddress';
 import { useJWT } from '../../utils/useAuth';
+import gradientAvatar from 'gradient-avatar';
 
 export const LoginStepTwo: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -42,8 +43,6 @@ export const LoginStepTwo: FC = () => {
             console.log('Successfully added,', data, JSON.stringify(message));
         },
     });
-
-    const gradientAvatar = require('gradient-avatar');
 
     if (!Wallet || !isSuccess) return <>Error Auth Data</>;
 
