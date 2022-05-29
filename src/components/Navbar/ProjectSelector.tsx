@@ -20,25 +20,27 @@ export const ProjectSelector: FC = () => {
     const [open, setOpen] = useState(false);
     const [project, setProject] = useState('');
     // use ref
-    const reference = useRef<HTMLDivElement>(null);
+    const reference = useRef<HTMLButtonElement>(null);
 
     return (
-        <div
+        <button
             onFocus={() => setOpen(true)}
             onBlur={(variable) => {
                 if (!reference.current.contains(variable.relatedTarget))
                     setOpen(false);
             }}
             className="
-                focus-within:dark:bg-green-500
                 dark:bg-black-700
-                w-48 py-2 px-5
+                w-48 py-4 px-5 max-h-10
                 text-left
                 relative
-                rounded-xl"
+                rounded-xl
+                flex items-center
+                transition-transform
+                hover:scale-105"
             ref={reference}
         >
-            <button>{project == '' ? 'Select Project' : project}</button>
+            {project == '' ? 'Select Project' : project}
             {open && (
                 <ul
                     className="absolute top-14 left-0
@@ -49,7 +51,7 @@ export const ProjectSelector: FC = () => {
                     flex flex-col gap-2"
                 >
                     {projects.map((project) => (
-                        <button
+                        <div
                             onClick={() => {
                                 setProject(project.name);
                                 setOpen(false);
@@ -58,10 +60,10 @@ export const ProjectSelector: FC = () => {
                             key={project.name}
                         >
                             {project.name}
-                        </button>
+                        </div>
                     ))}
                 </ul>
             )}
-        </div>
+        </button>
     );
 };
