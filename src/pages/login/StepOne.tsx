@@ -14,7 +14,7 @@ export const LoginStepOne: FC = () => {
                         >
                             <img
                                 className="w-5 block"
-                                src="https://i.imgur.com/lDQLvAJ.png"
+                                src="https://cdn.helgesson.dev/assets/lvkdotsh/eth-icon.svg"
                                 alt="Ethereum logo"
                             />
                             <div>Sign-In with Ethereum</div>

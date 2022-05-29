@@ -9,7 +9,7 @@ export const UserProfile: FC = () => {
         data: ENSName,
         isError: ENSIsError,
         isLoading: ENSIsLoading,
-        isSuccess: ENSIsSuccess
+        isSuccess: ENSIsSuccess,
     } = useEnsName({
         address: userData.address,
     });
