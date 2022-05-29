@@ -1,3 +1,4 @@
+import gradientAvatar from 'gradient-avatar';
 import { FC } from 'react';
 import { SiweMessage } from 'siwe';
 import {
@@ -12,7 +13,6 @@ import { DisconnectButton } from '../../components/DisconnectButton';
 import { capitalizeFirstLetter } from '../../utils/capitalize';
 import { formatAddress } from '../../utils/formatAddress';
 import { useJWT } from '../../utils/useAuth';
-import gradientAvatar from 'gradient-avatar';
 
 export const LoginStepTwo: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -41,6 +41,7 @@ export const LoginStepTwo: FC = () => {
         message: message.prepareMessage(),
         onSuccess: async (data, _variables) => {
             console.log('Successfully added,', data, JSON.stringify(message));
+            setToken('yes');
         },
     });
 
