@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          API_URL: 'https://signal.lvksh.cloud/'
+          API_URL: 'https://signal.lvksh.cloud'
       - uses: vimtor/action-zip@v1
         with:
           files: dist/
