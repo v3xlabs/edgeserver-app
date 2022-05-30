@@ -13,22 +13,20 @@ const ProjectList: FC = () => {
             owner: string;
         }[]
     );
-    const { data: Account } = useAccount();
+    const { data: account } = useAccount();
     const token = useJWT((state) => state.token);
 
     useEffect(() => {
-        if (Account) {
-            fetch((process.env.API_URL || '') + '/api/domain/ls', {
-                method: 'GET',
-                headers: { Authorization: 'Bearer ' + token },
-            }).then(async (value) => {
-                const _data = await value.json();
-                setData(_data);
-            });
-        } else {
+        if(!account) {
             setData([]);
+            return;
         }
-    }, [Account]);
+
+        fetch((process.env.API_URL || '') + '/api/domain/ls', {
+            method: 'GET',
+            headers: { Authorization: 'Bearer ' + token },
+        }).then(data => data.json()).then(setData);
+    }, [account]);
 
     return <div>
         {
