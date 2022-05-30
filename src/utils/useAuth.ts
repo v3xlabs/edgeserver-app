@@ -35,10 +35,9 @@ export const useWhitelist = (address: string) => {
             (process.env.API_URL || '') +
                 '/api/login/whitelist/' +
                 address.toLowerCase()
-        ).then(async (data) => {
-            const body = await data.json();
-            setWhitelisted(!!body['exists']);
-        });
+        )
+            .then((data) => data.json())
+            .then((body) => setWhitelisted(!!body['exists']));
     }, [address]);
 
     return whitelisted;
@@ -51,7 +50,6 @@ export const useAuth = () => {
 
     if (isLoading && token) return { state: 'loading-alt' };
 
-    // if (isLoading) return { state: 'loading' };
     if (isLoading) return { state: 'loading' };
 
     if (!data || !isSuccess) return { state: 'no-wallet' };

@@ -1,5 +1,5 @@
 {
-    "name": "template-react",
+    "name": "signal-web",
     "version": "1.0.0",
     "license": "GPL-3.0",
     "dependencies": {
@@ -27,14 +27,15 @@
         "@types/styled-components": "^5.1.15",
         "@typescript-eslint/parser": "^5.26.0",
         "eslint": "^8.16.0",
-        "eslint-plugin-lvksh": "^1.3.0",
+        "eslint-plugin-lvksh": "^1.4.0",
+        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-styled-components-a11y": "^0.0.34",
         "parcel": "^2.6.0",
         "process": "^0.11.10",
         "typescript": "^4.7.2",
         "util": "^0.12.4"
     },
     "scripts": {
-        "start": "parcel src/index.html",
         "dev": "parcel src/index.html",
         "build": "parcel build src/index.html",
         "lint": "eslint -c .eslintrc.json --ext .ts ./src"
