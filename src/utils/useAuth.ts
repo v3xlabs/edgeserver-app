@@ -32,7 +32,9 @@ export const useWhitelist = (address: string) => {
 
         // Insert code to actually fetch whitelisted status here
         fetch(
-            (process.env.API_URL || '') + '/api/login/whitelist/' + address
+            (process.env.API_URL || '') +
+                '/api/login/whitelist/' +
+                address.toLowerCase()
         ).then(async (data) => {
             const body = await data.json();
             setWhitelisted(!!body['exists']);

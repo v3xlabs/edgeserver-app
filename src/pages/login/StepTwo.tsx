@@ -24,6 +24,7 @@ export const LoginStepTwo: FC = () => {
     const { data: ENSName } = useEnsName({ address: Wallet?.address });
 
     const { activeConnector } = useConnect();
+
     const payload = {
         domain: window.location.host,
         address: Wallet.address,
@@ -41,7 +42,24 @@ export const LoginStepTwo: FC = () => {
         message: message.prepareMessage(),
         onSuccess: async (data, _variables) => {
             console.log('Successfully added,', data, JSON.stringify(message));
-            setToken('yes');
+            const data2 = await fetch(
+                (process.env.API_URL || '') + '/api/login/',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message, signature: data }),
+                }
+            );
+
+            const { token } = await data2.json();
+            if (!token) {
+                console.log('No token found');
+                return;
+            }
+
+            setToken(token);
         },
     });
 
