@@ -7,10 +7,10 @@ import { useAccount } from 'wagmi';
 const ProjectList: FC = () => {
     const [data, setData] = useState<
         {
-            site_id: string;
-            cid: string | undefined;
-            host: string;
-            owner: string;
+            app_id: string;
+            domain_id: string;
+            owner_id: string;
+            permissions: string;
         }[]
     >([]);
 
@@ -39,8 +39,8 @@ const ProjectList: FC = () => {
     return (
         <div>
             {data.map((project) => (
-                <div key={project.site_id}>
-                    {project.site_id} {project.host}
+                <div key={project.app_id}>
+                    {project.app_id} {project.domain_id}
                 </div>
             ))}
         </div>
