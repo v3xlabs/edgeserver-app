@@ -3,6 +3,8 @@ import { FC } from 'react';
 import { useAccount, useConnect, useEnsAvatar, useEnsName } from 'wagmi';
 
 import { capitalizeFirstLetter } from '../../utils/capitalize';
+import { formatAddress } from '../../utils/formatAddress';
+import { gradientAvatar } from '../../utils/gradientAvatar';
 
 export const UserProfile: FC = () => {
     const { data: userData, isSuccess } = useAccount();
@@ -37,7 +39,7 @@ export const UserProfile: FC = () => {
                                 <div className="text-2 font-bold text-right">
                                     {ENSName
                                         ? `${ENSName} (${userData.address})`
-                                        : userData.address}
+                                        : formatAddress(userData.address)}
                                 </div>
                                 <div className="text-1 opacity-50 text-right">
                                     Logged in with{' '}
@@ -48,11 +50,24 @@ export const UserProfile: FC = () => {
                                     </b>
                                 </div>
                             </div>
-                            <img
-                                className="w-12 h-12 flex-shrink-0 rounded-full bg-neutral-700"
-                                src={ENSAvatar}
-                                alt="ENS Avatar"
-                            />
+                            <div className="w-12 h-12 flex-shrink-0 rounded-full bg-neutral-700">
+                                {ENSAvatar ? (
+                                    <img
+                                        src={ENSAvatar}
+                                        className="w-12 h-12 rounded-full"
+                                        alt="ENSavatar"
+                                    />
+                                ) : (
+                                    <div
+                                        className="w-12 h-12 rounded-full overflow-hidden"
+                                        dangerouslySetInnerHTML={{
+                                            __html: gradientAvatar(
+                                                userData.address
+                                            ),
+                                        }}
+                                    />
+                                )}
+                            </div>
                         </button>
                     );
                 }}

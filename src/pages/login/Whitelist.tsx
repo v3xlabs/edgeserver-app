@@ -4,6 +4,8 @@ import { useAccount, useConnect, useEnsAvatar, useEnsName } from 'wagmi';
 
 import { DisconnectButton } from '../../components/DisconnectButton';
 import { capitalizeFirstLetter } from '../../utils/capitalize';
+import { formatAddress } from '../../utils/formatAddress';
+import { gradientAvatar } from '../../utils/gradientAvatar';
 
 export const Whitelist: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -20,17 +22,36 @@ export const Whitelist: FC = () => {
     return (
         <div className="p-8 card w-full max-w-xl flex flex-col gap-6">
             <div className="flex items-center gap-4">
-                <img src={whitelist} className="w-16 h-16" />
+                <img
+                    src={whitelist}
+                    className="w-16 h-16"
+                    alt="whitelist icon"
+                />
                 <h2 className="text-2xl font-bold">WHITELIST</h2>
             </div>
             <div>Sorry! It appears you are not on the whitelist!</div>
             <div>You are logged in as</div>
             <div className="flex items-center gap-4 flex-wrap">
                 <div className="w-16 h-16 flex-shrink-0 rounded-full bg-neutral-700">
-                    <img src={ENSAvatar} className="w-16 h-16 rounded-full" />
+                    {ENSAvatar ? (
+                        <img
+                            src={ENSAvatar}
+                            className="w-16 h-16 rounded-full"
+                            alt="ENSavatar"
+                        />
+                    ) : (
+                        <div
+                            className="w-16 h-16 rounded-full overflow-hidden"
+                            dangerouslySetInnerHTML={{
+                                __html: gradientAvatar(Wallet.address),
+                            }}
+                        />
+                    )}
                 </div>
                 <div className="flex-1">
-                    <div className="font-bold">{ENSName || Wallet.address}</div>
+                    <div className="font-bold">
+                        {ENSName || formatAddress(Wallet.address)}
+                    </div>
                     <div className="opacity-50">
                         Logged in with{' '}
                         <b>

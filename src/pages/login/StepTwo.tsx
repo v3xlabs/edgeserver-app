@@ -54,8 +54,10 @@ export const LoginStepTwo: FC = () => {
             );
 
             const { token } = await data2.json();
+
             if (!token) {
                 console.log('No token found');
+
                 return;
             }
 
