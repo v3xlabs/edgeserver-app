@@ -37,7 +37,9 @@ export const UserProfile: FC = () => {
                             <div className="">
                                 <div className="text-2 font-bold text-right">
                                     {ENSName
-                                        ? `${ENSName} (${userData.address})`
+                                        ? `${ENSName} (${formatAddress(
+                                              userData.address!
+                                          )})`
                                         : formatAddress(userData.address!)}
                                 </div>
                                 <div className="text-1 opacity-50 text-right">
