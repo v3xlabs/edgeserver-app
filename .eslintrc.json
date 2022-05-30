@@ -1,19 +1,22 @@
 {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2021
+        "ecmaVersion": 2022
     },
-    "extends": [
-        "plugin:lvksh/recommended"
-    ],
-    "ignorePatterns": [
-        "!**/*"
-    ],
-    "plugins": [
-        "lvksh"
-    ],
+    "extends": ["plugin:lvksh/recommended", "plugin:react/recommended"],
+    "ignorePatterns": ["!**/*"],
+    "plugins": ["lvksh", "react"],
     "env": {
-        "node": true
+        "browser": true,
+        "node": true,
+        "es2022": true
     },
-    "rules": {}
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "react/react-in-jsx-scope": "off"
+    }
 }

@@ -17,26 +17,29 @@ const ProjectList: FC = () => {
     const token = useJWT((state) => state.token);
 
     useEffect(() => {
-        if(!account) {
+        if (!account) {
             setData([]);
+
             return;
         }
 
         fetch((process.env.API_URL || '') + '/api/domain/ls', {
             method: 'GET',
             headers: { Authorization: 'Bearer ' + token },
-        }).then(data => data.json()).then(setData);
+        })
+            .then((data) => data.json())
+            .then(setData);
     }, [account]);
 
-    return <div>
-        {
-            data.map(project => (
+    return (
+        <div>
+            {data.map((project) => (
                 <div key={project.site_id}>
                     {project.site_id} {project.host}
                 </div>
-            ))
-        }
-    </div>;
+            ))}
+        </div>
+    );
 };
 
 export const Home: FC = () => {
