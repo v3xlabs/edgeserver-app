@@ -27,6 +27,7 @@ const wagmiClient = createClient({
     provider,
 });
 
+// eslint-disable-next-line react/prop-types
 const Disclaimer: DisclaimerComponent = ({ Text, Link }) => (
     <Text>
         By connecting your wallet, you agree to the get rickrolled by the{' '}

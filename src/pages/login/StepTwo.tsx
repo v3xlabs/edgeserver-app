@@ -1,3 +1,9 @@
+import { DisconnectButton } from '@components/DisconnectButton';
+import { capitalizeFirstLetter } from '@utils/capitalize';
+import { environment } from '@utils/enviroment';
+import { formatAddress } from '@utils/formatAddress';
+import { gradientAvatar } from '@utils/gradientAvatar';
+import { useJWT } from '@utils/useAuth';
 import { FC } from 'react';
 import { SiweMessage } from 'siwe';
 import {
@@ -7,12 +13,6 @@ import {
     useEnsName,
     useSignMessage,
 } from 'wagmi';
-
-import { DisconnectButton } from '../../components/DisconnectButton';
-import { capitalizeFirstLetter } from '../../utils/capitalize';
-import { formatAddress } from '../../utils/formatAddress';
-import { gradientAvatar } from '../../utils/gradientAvatar';
-import { useJWT } from '../../utils/useAuth';
 
 export const LoginStepTwo: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -25,6 +25,9 @@ export const LoginStepTwo: FC = () => {
 
     const { activeConnector } = useConnect();
 
+    // Used twice
+    if (!Wallet || !isSuccess || !Wallet.address) return <>Error Auth Data</>;
+
     const payload = {
         domain: window.location.host,
         address: Wallet.address,
@@ -33,7 +36,11 @@ export const LoginStepTwo: FC = () => {
         uri: window.location.origin,
         version: '1',
     };
+
     const message = new SiweMessage(payload);
+
+    const apiUrl = environment.API_URL;
+
     const {
         signMessage,
         isLoading: signIsLoading,
@@ -41,19 +48,16 @@ export const LoginStepTwo: FC = () => {
     } = useSignMessage({
         message: message.prepareMessage(),
         onSuccess: async (data, _variables) => {
-            console.log('Successfully added,', data, JSON.stringify(message));
-            const data2 = await fetch(
-                (process.env.API_URL || '') + '/api/login/',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message, signature: data }),
-                }
-            );
+            // console.log('Successfully added,', data, JSON.stringify(message));
+            const loginData = await fetch(apiUrl + '/api/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message, signature: data }),
+            });
 
-            const { token } = await data2.json();
+            const { token } = await loginData.json();
 
             if (!token) {
                 console.log('No token found');
@@ -75,6 +79,7 @@ export const LoginStepTwo: FC = () => {
                     {ENSAvatar ? (
                         <img
                             src={ENSAvatar}
+                            alt="Avatar"
                             className="w-16 h-16 rounded-full"
                         />
                     ) : (

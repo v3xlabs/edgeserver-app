@@ -1,21 +1,22 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { capitalizeFirstLetter } from '@utils/capitalize';
+import { formatAddress } from '@utils/formatAddress';
+import { gradientAvatar } from '@utils/gradientAvatar';
 import { FC } from 'react';
 import { useAccount, useConnect, useEnsAvatar, useEnsName } from 'wagmi';
-
-import { capitalizeFirstLetter } from '../../utils/capitalize';
-import { formatAddress } from '../../utils/formatAddress';
-import { gradientAvatar } from '../../utils/gradientAvatar';
 
 export const UserProfile: FC = () => {
     const { data: userData, isSuccess } = useAccount();
 
     const { activeConnector } = useConnect();
 
+    if (!isSuccess || !userData || !userData.address) return <></>;
+
     const {
         data: ENSName,
-        isError: ENSIsError,
-        isLoading: ENSIsLoading,
-        isSuccess: ENSIsSuccess,
+        // isError: ENSIsError,
+        // isLoading: ENSIsLoading,
+        // isSuccess: ENSIsSuccess,
     } = useEnsName({
         address: userData.address,
     });
@@ -23,8 +24,6 @@ export const UserProfile: FC = () => {
     const { data: ENSAvatar } = useEnsAvatar({
         addressOrName: userData.address,
     });
-
-    if (!isSuccess) return <></>;
 
     return (
         <div>
@@ -38,8 +37,10 @@ export const UserProfile: FC = () => {
                             <div className="">
                                 <div className="text-2 font-bold text-right">
                                     {ENSName
-                                        ? `${ENSName} (${userData.address})`
-                                        : formatAddress(userData.address)}
+                                        ? `${ENSName} (${formatAddress(
+                                              userData.address!
+                                          )})`
+                                        : formatAddress(userData.address!)}
                                 </div>
                                 <div className="text-1 opacity-50 text-right">
                                     Logged in with{' '}
@@ -62,7 +63,7 @@ export const UserProfile: FC = () => {
                                         className="w-12 h-12 rounded-full overflow-hidden"
                                         dangerouslySetInnerHTML={{
                                             __html: gradientAvatar(
-                                                userData.address
+                                                userData.address!
                                             ),
                                         }}
                                     />

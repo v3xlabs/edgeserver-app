@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 * {
     box-sizing: border-box;
@@ -18,8 +18,7 @@ body {
     height: 100vh;
     padding: 0;
     margin: 0;
-    // font-family: monospace, sans-serif;
-    font-family: "Inter", monospace, sans-serif;
+    font-family: 'Inter', monospace, sans-serif;
 }
 
 a {
@@ -54,6 +53,9 @@ a {
     &:hover {
         --tw-scale-x: 1.02;
         --tw-scale-y: 1.02;
-        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+            rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
+            skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
+            scaleY(var(--tw-scale-y));
     }
 }

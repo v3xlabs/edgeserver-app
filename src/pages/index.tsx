@@ -1,42 +1,50 @@
+import { DisconnectButton } from '@components/DisconnectButton';
+import { environment } from '@utils/enviroment';
+import { useJWT } from '@utils/useAuth';
 import { FC, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
-import { DisconnectButton } from '../components/DisconnectButton';
-import { useJWT } from '../utils/useAuth';
-
 const ProjectList: FC = () => {
-    const [data, setData] = useState(
-        [] as {
-            site_id: string;
-            cid: string | null;
-            host: string;
-            owner: string;
+    const [data, setData] = useState<
+        {
+            app_id: string;
+            domain_id: string;
+            owner_id: string;
+            permissions: string;
         }[]
-    );
+    >([]);
+
     const { data: account } = useAccount();
     const token = useJWT((state) => state.token);
 
+    const apiUrl = environment.API_URL;
+
     useEffect(() => {
-        if(!account) {
+        if (!account) {
             setData([]);
+
             return;
         }
 
-        fetch((process.env.API_URL || '') + '/api/domain/ls', {
-            method: 'GET',
-            headers: { Authorization: 'Bearer ' + token },
-        }).then(data => data.json()).then(setData);
+        (async () => {
+            const response = await fetch(apiUrl + '/api/domain/ls', {
+                method: 'GET',
+                headers: { Authorization: 'Bearer ' + token },
+            });
+
+            setData(await response.json());
+        })();
     }, [account]);
 
-    return <div>
-        {
-            data.map(project => (
-                <div key={project.site_id}>
-                    {project.site_id} {project.host}
+    return (
+        <div>
+            {data.map((project) => (
+                <div key={project.app_id}>
+                    {project.app_id} {project.domain_id}
                 </div>
-            ))
-        }
-    </div>;
+            ))}
+        </div>
+    );
 };
 
 export const Home: FC = () => {

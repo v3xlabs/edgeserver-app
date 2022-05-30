@@ -1,11 +1,10 @@
+import { DisconnectButton } from '@components/DisconnectButton';
+import { capitalizeFirstLetter } from '@utils/capitalize';
+import { formatAddress } from '@utils/formatAddress';
+import { gradientAvatar } from '@utils/gradientAvatar';
 import { FC } from 'react';
 import whitelist from 'url:../../../assets/whitelist.svg';
 import { useAccount, useConnect, useEnsAvatar, useEnsName } from 'wagmi';
-
-import { DisconnectButton } from '../../components/DisconnectButton';
-import { capitalizeFirstLetter } from '../../utils/capitalize';
-import { formatAddress } from '../../utils/formatAddress';
-import { gradientAvatar } from '../../utils/gradientAvatar';
 
 export const Whitelist: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
@@ -13,11 +12,12 @@ export const Whitelist: FC = () => {
     const { data: ENSAvatar } = useEnsAvatar({
         addressOrName: Wallet?.address,
     });
+
     const { data: ENSName } = useEnsName({ address: Wallet?.address });
 
     const { activeConnector } = useConnect();
 
-    if (!Wallet || !isSuccess) return <>Error Auth Data</>;
+    if (!Wallet || !isSuccess || !Wallet.address) return <>Error Auth Data</>;
 
     return (
         <div className="p-8 card w-full max-w-xl flex flex-col gap-6">

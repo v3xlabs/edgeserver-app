@@ -1,9 +1,8 @@
+import { Login } from '@pages/login/Login';
+import { useAuth } from '@utils/useAuth';
 import { FC } from 'react';
 
-import { Login } from '../pages/login/Login';
-import { useAuth } from '../utils/useAuth';
-
-export const LoginFacade: FC = ({ children }) => {
+export const LoginFacade: FC<{ children: JSX.Element }> = ({ children }) => {
     const { state } = useAuth();
     // const {
     //     isError,

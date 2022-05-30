@@ -26,6 +26,8 @@ export const ProjectSelector: FC = () => {
         <button
             onFocus={() => setOpen(true)}
             onBlur={(variable) => {
+                if (!reference.current) return;
+
                 if (!reference.current.contains(variable.relatedTarget))
                     setOpen(false);
             }}
@@ -50,18 +52,25 @@ export const ProjectSelector: FC = () => {
                     px-4
                     flex flex-col gap-2"
                 >
-                    {projects.map((project) => (
-                        <div
-                            onClick={() => {
-                                setProject(project.name);
-                                setOpen(false);
-                            }}
-                            className="rounded-md"
-                            key={project.name}
-                        >
-                            {project.name}
-                        </div>
-                    ))}
+                    {projects.map((project) => {
+                        const projectClicker = () => {
+                            setProject(project.name);
+                            setOpen(false);
+                        };
+
+                        return (
+                            <div
+                                onClick={projectClicker}
+                                onKeyDown={projectClicker}
+                                role="button"
+                                className="rounded-md"
+                                key={project.name}
+                                tabIndex={0}
+                            >
+                                {project.name}
+                            </div>
+                        );
+                    })}
                 </ul>
             )}
         </button>

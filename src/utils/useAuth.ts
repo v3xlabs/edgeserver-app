@@ -3,6 +3,8 @@ import { useAccount } from 'wagmi';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { environment } from './enviroment';
+
 type JWTData = {
     token: string;
 };
@@ -30,14 +32,19 @@ export const useWhitelist = (address: string) => {
             return;
         }
 
-        // Insert code to actually fetch whitelisted status here
-        fetch(
-            (process.env.API_URL || '') +
-                '/api/login/whitelist/' +
-                address.toLowerCase()
-        )
-            .then((data) => data.json())
-            .then((body) => setWhitelisted(!!body['exists']));
+        (async () => {
+            // Insert code to actually fetch whitelisted status here
+
+            const response = await fetch(
+                environment.API_URL +
+                    '/api/login/whitelist/' +
+                    address.toLowerCase()
+            );
+
+            const body = await response.json();
+
+            setWhitelisted(!!body['exists']);
+        })();
     }, [address]);
 
     return whitelisted;
@@ -46,7 +53,9 @@ export const useWhitelist = (address: string) => {
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
     const { data, isLoading, isSuccess } = useAccount();
-    const whitelisted = useWhitelist(data?.address);
+    const whitelisted = useWhitelist(data?.address || '');
+
+    if (!data?.address) return { state: 'no-wallet' };
 
     if (isLoading && token) return { state: 'loading-alt' };
 
