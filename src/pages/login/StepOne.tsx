@@ -6,7 +6,8 @@ export const LoginStepOne: FC = () => {
     return (
         <div className="p-8 card w-full max-w-lg m-4">
             <ConnectButton.Custom>
-                {({ chain, openConnectModal }) => {
+                {/* { chain } */}
+                {({ openConnectModal }) => {
                     return (
                         <button
                             onClick={openConnectModal}

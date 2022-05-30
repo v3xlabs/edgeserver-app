@@ -1,7 +1,6 @@
+import { useJWT } from '@utils/useAuth';
 import { FC } from 'react';
 import { useDisconnect } from 'wagmi';
-
-import { useJWT } from '../utils/useAuth';
 
 export const DisconnectButton: FC<{ label?: string; full?: boolean }> = ({
     label,

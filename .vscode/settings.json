@@ -15,5 +15,9 @@
   },
   "files.associations": {
     "*.scss": "postcss",
+    ".parcelrc": "json"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///run/media/Storage/Code/Projects/signal/signal-web/.github/workflows/build.yml"
   }
 }

@@ -17,9 +17,10 @@
         "baseUrl": ".",
         "paths": {
             "@components/*": ["src/components/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/utils/*"],
+            "@pages/*": ["src/pages/*"]
         }
     },
-    "include": ["**/*.ts", "**/*.tsx"],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
     "exclude": ["node_modules"]
 }

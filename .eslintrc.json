@@ -5,7 +5,7 @@
     },
     "extends": ["plugin:lvksh/recommended", "plugin:react/recommended"],
     "ignorePatterns": ["!**/*"],
-    "plugins": ["lvksh", "react"],
+    "plugins": ["lvksh", "react", "node"],
     "env": {
         "browser": true,
         "node": true,
@@ -16,7 +16,12 @@
             "version": "detect"
         }
     },
+    "globals": {
+        "JSX":"readonly"
+    },
     "rules": {
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "node/no-process-env": "error",
+        "camelcase": ["error", { "properties": "always" }]
     }
 }

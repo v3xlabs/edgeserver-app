@@ -1,20 +1,23 @@
+import { DisconnectButton } from '@components/DisconnectButton';
+import { environment } from '@utils/enviroment';
+import { useJWT } from '@utils/useAuth';
 import { FC, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 
-import { DisconnectButton } from '../components/DisconnectButton';
-import { useJWT } from '../utils/useAuth';
-
 const ProjectList: FC = () => {
-    const [data, setData] = useState(
-        [] as {
+    const [data, setData] = useState<
+        {
             site_id: string;
-            cid: string | null;
+            cid: string | undefined;
             host: string;
             owner: string;
         }[]
-    );
+    >([]);
+
     const { data: account } = useAccount();
     const token = useJWT((state) => state.token);
+
+    const apiUrl = environment.API_URL;
 
     useEffect(() => {
         if (!account) {
@@ -23,12 +26,14 @@ const ProjectList: FC = () => {
             return;
         }
 
-        fetch((process.env.API_URL || '') + '/api/domain/ls', {
-            method: 'GET',
-            headers: { Authorization: 'Bearer ' + token },
-        })
-            .then((data) => data.json())
-            .then(setData);
+        (async () => {
+            const response = await fetch(apiUrl + '/api/domain/ls', {
+                method: 'GET',
+                headers: { Authorization: 'Bearer ' + token },
+            });
+
+            setData(await response.json());
+        })();
     }, [account]);
 
     return (
