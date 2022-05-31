@@ -61,9 +61,9 @@ export const Navbar: FC = () => {
                         </Link>
                         <h1 className="text-xl font-bold">
                             {app_id
-                                ? (deploy_id
+                                ? deploy_id
                                     ? `Deployment #${deploy_id}`
-                                    : `App #${app_id}`)
+                                    : `App #${app_id}`
                                 : 'Edge Server'}
                         </h1>
                         <div className="ml-auto">

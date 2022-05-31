@@ -10,7 +10,7 @@ import { useAccount, useConnect } from 'wagmi';
 export const Whitelist: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
 
-    const {Avatar, Name} = useENS();
+    const { Avatar, Name } = useENS();
 
     const { activeConnector } = useConnect();
 
