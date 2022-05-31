@@ -21,7 +21,6 @@
     },
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "node/no-process-env": "error",
-        "camelcase": ["error", { "properties": "always" }]
+        "node/no-process-env": "error"
     }
 }

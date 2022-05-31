@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const NavbarLink: FC<{ name: string; path: string }> = ({
+export const NavbarLink: FC<{ name: string; path: string; end?: boolean }> = ({
     name,
     path,
+    end = false,
 }) => {
     return (
         <NavLink
@@ -15,6 +16,7 @@ export const NavbarLink: FC<{ name: string; path: string }> = ({
                         : 'text-neutral-600'
                 }`
             }
+            end={end}
         >
             {name}
         </NavLink>
