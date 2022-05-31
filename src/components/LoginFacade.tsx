@@ -1,28 +1,16 @@
 import { Login } from '@pages/login/Login';
-import { useAuth } from '@utils/useAuth';
-import { FC } from 'react';
+import { useAuth, useJWT } from '@utils/useAuth';
+import { FC, useEffect } from 'react';
 
 export const LoginFacade: FC<{ children: JSX.Element }> = ({ children }) => {
-    const { state } = useAuth();
-    // const {
-    //     isError,
-    //     isFetched,
-    //     isFetching,
-    //     isIdle,
-    //     isLoading,
-    //     isRefetching,
-    //     isSuccess,
-    // } = useAccount();
+    const { state, address } = useAuth();
+    const { token, resetToken } = useJWT((state) => state);
 
-    // console.log(state, {
-    //     isError,
-    //     isFetched,
-    //     isFetching,
-    //     isIdle,
-    //     isLoading,
-    //     isRefetching,
-    //     isSuccess,
-    // });
+    useEffect(() => {
+        if (!address && token) {
+            resetToken();
+        }
+    }, [address, token]);
 
     // User has token and is waiting for address to confirm
     if (state === 'loading-alt') return <>resuming session...</>;
