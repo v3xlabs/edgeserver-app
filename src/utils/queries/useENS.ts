@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useEnsAvatar, useEnsName } from 'wagmi';
 
 export const useENS = () => {
-    const { state, address } = useAuth();
+    const { address } = useAuth();
 
     const {
         data: Name,

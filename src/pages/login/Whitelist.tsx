@@ -2,18 +2,15 @@ import { DisconnectButton } from '@components/DisconnectButton';
 import { capitalizeFirstLetter } from '@utils/capitalize';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
+import { useENS } from '@utils/queries/useENS';
 import { FC } from 'react';
 import whitelist from 'url:../../../assets/whitelist.svg';
-import { useAccount, useConnect, useEnsAvatar, useEnsName } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 
 export const Whitelist: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
 
-    const { data: ENSAvatar } = useEnsAvatar({
-        addressOrName: Wallet?.address,
-    });
-
-    const { data: ENSName } = useEnsName({ address: Wallet?.address });
+    const {Avatar, Name} = useENS();
 
     const { activeConnector } = useConnect();
 
@@ -33,9 +30,9 @@ export const Whitelist: FC = () => {
             <div>You are logged in as</div>
             <div className="flex items-center gap-4 flex-wrap">
                 <div className="w-16 h-16 flex-shrink-0 rounded-full bg-neutral-700">
-                    {ENSAvatar ? (
+                    {Avatar ? (
                         <img
-                            src={ENSAvatar}
+                            src={Avatar}
                             className="w-16 h-16 rounded-full"
                             alt="ENSavatar"
                         />
@@ -50,7 +47,7 @@ export const Whitelist: FC = () => {
                 </div>
                 <div className="flex-1">
                     <div className="font-bold">
-                        {ENSName || formatAddress(Wallet.address)}
+                        {Name || formatAddress(Wallet.address)}
                     </div>
                     <div className="opacity-50">
                         Logged in with{' '}
