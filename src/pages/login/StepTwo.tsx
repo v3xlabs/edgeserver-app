@@ -3,25 +3,17 @@ import { capitalizeFirstLetter } from '@utils/capitalize';
 import { environment } from '@utils/enviroment';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
+import { useENS } from '@utils/queries/useENS';
 import { useJWT } from '@utils/useAuth';
 import { FC } from 'react';
 import { SiweMessage } from 'siwe';
-import {
-    useAccount,
-    useConnect,
-    useEnsAvatar,
-    useEnsName,
-    useSignMessage,
-} from 'wagmi';
+import { useAccount, useConnect, useSignMessage } from 'wagmi';
 
 export const LoginStepTwo: FC = () => {
     const { data: Wallet, isSuccess } = useAccount();
     const setToken = useJWT((state) => state.setToken);
 
-    const { data: ENSAvatar } = useEnsAvatar({
-        addressOrName: Wallet?.address,
-    });
-    const { data: ENSName } = useEnsName({ address: Wallet?.address });
+    const { Name, Avatar } = useENS();
 
     const { activeConnector } = useConnect();
 
@@ -76,9 +68,9 @@ export const LoginStepTwo: FC = () => {
             <h2 className="text-lg mb-4">Step two</h2>
             <div className="flex items-center gap-4 flex-wrap">
                 <div className="w-16 h-16 flex-shrink-0 rounded-full bg-neutral-700">
-                    {ENSAvatar ? (
+                    {Avatar ? (
                         <img
-                            src={ENSAvatar}
+                            src={Avatar}
                             alt="Avatar"
                             className="w-16 h-16 rounded-full"
                         />
@@ -93,7 +85,7 @@ export const LoginStepTwo: FC = () => {
                 </div>
                 <div className="flex-1">
                     <div className="font-bold">
-                        {ENSName || formatAddress(Wallet.address)}
+                        {Name || formatAddress(Wallet.address)}
                     </div>
                     <div className="opacity-50">
                         Logged in with{' '}

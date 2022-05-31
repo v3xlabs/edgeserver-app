@@ -63,9 +63,10 @@ export const useAuth = () => {
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
-    if (!whitelisted) return { state: 'not-whitelisted' };
+    if (!whitelisted)
+        return { state: 'not-whitelisted', address: data.address };
 
-    if (!token) return { state: 'no-token' };
+    if (!token) return { state: 'no-token', address: data.address };
 
-    return { state: 'authenticated' };
+    return { state: 'authenticated', address: data.address };
 };
