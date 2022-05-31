@@ -21,25 +21,6 @@ const links: {
         path: '/settings',
     },
 ];
-const app_links: {
-    name: string;
-    path: string;
-    end?: boolean;
-}[] = [
-    {
-        name: 'Application',
-        path: '/app/:app_id',
-        end: true,
-    },
-    {
-        name: 'Deployments',
-        path: '/app/:app_id/deployments',
-    },
-    {
-        name: 'Settings',
-        path: '/app/:app_id/settings',
-    },
-];
 
 export const Navbar: FC = () => {
     // const app_id = useAppData((state) => state.app_id);
@@ -108,7 +89,7 @@ export const Navbar: FC = () => {
                             />
                             {deploy_id ? (
                                 <NavbarLink
-                                    name={'Deployments ' + deploy_id}
+                                    name={'Deployments > ' + deploy_id}
                                     path={
                                         '/app/' +
                                         app_id +

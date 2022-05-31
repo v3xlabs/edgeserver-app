@@ -4,6 +4,7 @@ import {
     getDefaultWallets,
     RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
@@ -26,6 +27,8 @@ const wagmiClient = createClient({
     connectors,
     provider,
 });
+
+const queryClient = new QueryClient();
 
 // eslint-disable-next-line react/prop-types
 const Disclaimer: DisclaimerComponent = ({ Text, Link }) => (
@@ -51,13 +54,15 @@ export const Document = () => {
                     learnMoreUrl: 'https://edgeserver.io/',
                 }}
             >
-                <BrowserRouter>
-                    <div className="dark:bg-black-800 dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
-                        <LoginFacade>
-                            <App />
-                        </LoginFacade>
-                    </div>
-                </BrowserRouter>
+                <QueryClientProvider client={queryClient}>
+                    <BrowserRouter>
+                        <div className="dark:bg-black-800 dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
+                            <LoginFacade>
+                                <App />
+                            </LoginFacade>
+                        </div>
+                    </BrowserRouter>
+                </QueryClientProvider>
             </RainbowKitProvider>
         </WagmiConfig>
     );
