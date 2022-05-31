@@ -21,6 +21,7 @@
     },
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "node/no-process-env": "error"
+        "node/no-process-env": "error",
+        "unicorn/no-nested-ternary": "off"
     }
 }
