@@ -2,6 +2,7 @@ import { DisconnectButton } from '@components/DisconnectButton';
 import { environment } from '@utils/enviroment';
 import { useJWT } from '@utils/useAuth';
 import { FC, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 
 const ProjectList: FC = () => {
@@ -27,7 +28,7 @@ const ProjectList: FC = () => {
         }
 
         (async () => {
-            const response = await fetch(apiUrl + '/api/domain/ls', {
+            const response = await fetch(apiUrl + '/api/apps/ls', {
                 method: 'GET',
                 headers: { Authorization: 'Bearer ' + token },
             });
@@ -37,11 +38,18 @@ const ProjectList: FC = () => {
     }, [account]);
 
     return (
-        <div>
+        <div className="gap-4 flex flex-col w-full">
+            <h2 className="text-2xl">
+                Projects {data && data.length > 0 ? `(${data.length})` : ''}
+            </h2>
             {data.map((project) => (
-                <div key={project.app_id}>
+                <Link
+                    key={project.app_id}
+                    className="p-4 border-2 border-neutral-900 block"
+                    to={'/app/' + project.app_id}
+                >
                     {project.app_id} {project.domain_id}
-                </div>
+                </Link>
             ))}
         </div>
     );
@@ -49,7 +57,7 @@ const ProjectList: FC = () => {
 
 export const Home: FC = () => {
     return (
-        <div className="m-8">
+        <div className="containerd pt-8">
             <DisconnectButton />
 
             <ProjectList />

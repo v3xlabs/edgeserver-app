@@ -12,6 +12,11 @@
     font-size: 16px;
 }
 
+.root {
+    width: 100%;
+    max-width: 100vw;
+}
+
 html,
 body {
     width: 100vw;
@@ -19,6 +24,8 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Inter', monospace, sans-serif;
+    overflow: hidden;
+    color-scheme: dark;
 }
 
 a {
@@ -58,4 +65,8 @@ a {
             skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x))
             scaleY(var(--tw-scale-y));
     }
+}
+
+.containerd {
+    @apply max-w-4xl w-full px-4 mx-auto;
 }
