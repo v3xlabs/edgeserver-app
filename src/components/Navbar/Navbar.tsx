@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import icon from 'url:../../../assets/signal.svg';
 
 import { NavbarLink } from './NavLink';
-import { ProjectSelector } from './ProjectSelector';
 import { UserProfile } from './UserProfile';
 
 const links: {
@@ -60,10 +59,16 @@ export const Navbar: FC = () => {
                             <img
                                 src={icon}
                                 alt="Signal Icon"
-                                className="flex-0 w-10"
+                                className="flex-0 w-10 hover:scale-105"
                             />
                         </Link>
-                        <ProjectSelector />
+                        <h1 className="text-2xl font-bold">
+                            {app_id
+                                ? (deploy_id
+                                    ? `Deployment #${deploy_id}`
+                                    : `App #${app_id}`)
+                                : 'Edge Server'}
+                        </h1>
                         <div className="ml-auto">
                             <UserProfile />
                         </div>
