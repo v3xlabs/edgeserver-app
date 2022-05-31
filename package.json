@@ -42,6 +42,7 @@
         "@parcel/transformer-sass": "^2.0.1",
         "@types/react": "^18.0.9",
         "@types/react-dom": "^18.0.5",
+        "react-query": "^3.39.1",
         "@types/string-hash": "^1.1.1",
         "@typescript-eslint/parser": "^5.26.0",
         "eslint": "^8.16.0",
