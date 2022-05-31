@@ -28,7 +28,7 @@ export const Navbar: FC = () => {
     const { app_id, deploy_id } = useMemo(() => {
         const app_id_matches = pathname.match(/^\/app\/(?<app_id>\d+)/);
         const deploy_id_matches = pathname.match(
-            /^\/app\/(\d+)\/deployments\/(\d+)/
+            /^\/app\/(\d+)\/deployment\/(\d+)/
         );
 
         return {
@@ -46,28 +46,32 @@ export const Navbar: FC = () => {
     }, [pathname]);
 
     return (
-        <div
-            className="w-full pt-4
-            bg-black-900 border-b-2 border-neutral-700"
-        >
+        <>
             <div
-                className="w-full max-w-4xl mx-auto
-                flex flex-col gap-4"
+                className="w-full pt-4
+            bg-black-900"
             >
-                <div className="flex gap-4 items-center flex-wrap containerd">
-                    <Link to={'/'}>
-                        <img
-                            src={icon}
-                            alt="Signal Icon"
-                            className="flex-0 w-10"
-                        />
-                    </Link>
-                    <ProjectSelector />
-                    <div className="ml-auto">
-                        <UserProfile />
+                <div
+                    className="w-full max-w-4xl mx-auto
+                flex flex-col gap-4"
+                >
+                    <div className="flex gap-4 items-center flex-wrap containerd">
+                        <Link to={'/'}>
+                            <img
+                                src={icon}
+                                alt="Signal Icon"
+                                className="flex-0 w-10"
+                            />
+                        </Link>
+                        <ProjectSelector />
+                        <div className="ml-auto">
+                            <UserProfile />
+                        </div>
                     </div>
                 </div>
-                <div className="flex container mx-auto w-full justify-between">
+            </div>
+            <div className="sticky top-0 left-0 right-0 w-full flex h-12 items-end bg-black-900 border-b-2 border-neutral-700">
+                <div className="flex justify-between containerd">
                     {!app_id && (
                         <div className="flex gap-4">
                             {links.map((link) => (
@@ -89,11 +93,12 @@ export const Navbar: FC = () => {
                             />
                             {deploy_id ? (
                                 <NavbarLink
-                                    name={'Deployments > ' + deploy_id}
-                                    path={
+                                    name={`Deployments ${deploy_id}`}
+                                    path={'/app/' + app_id + '/deployments'}
+                                    path_match={
                                         '/app/' +
                                         app_id +
-                                        '/deployments/' +
+                                        '/deployment/' +
                                         deploy_id
                                     }
                                 />
@@ -111,6 +116,6 @@ export const Navbar: FC = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };

@@ -18,8 +18,8 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     return (
         <Link
             key={app_id}
-            className="p-4 border-2 border-neutral-900 flex"
-            to={'/app/' + app_id + '/deployments/' + deployment.deploy_id}
+            className="p-4 border-2 card flex hover:bg-black-700"
+            to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
             <div className="flex-1">
                 <h3>{deployment.deploy_id}</h3>

@@ -14,18 +14,22 @@
 
 .root {
     width: 100%;
-    max-width: 100vw;
+    max-width: 100%;
 }
 
 html,
 body {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     padding: 0;
     margin: 0;
     font-family: 'Inter', monospace, sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
     color-scheme: dark;
+}
+
+body {
+    scrollbar-gutter: stable;
 }
 
 a {
@@ -34,7 +38,7 @@ a {
 }
 
 .card {
-    @apply border-neutral-400 dark:border-neutral-700 border-2 rounded-2xl;
+    @apply border-neutral-400 dark:border-neutral-700 border-2 rounded-lg;
 }
 
 .hvr-hover {
@@ -69,4 +73,8 @@ a {
 
 .containerd {
     @apply max-w-4xl w-full px-4 mx-auto;
+}
+
+.link {
+    @apply text-neutral-400 hover:brightness-75 hover:underline;
 }
