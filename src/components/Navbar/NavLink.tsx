@@ -1,3 +1,4 @@
+import { cx } from '@utils/cx';
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -20,9 +21,10 @@ export const NavbarLink: FC<{
     return (
         <Link
             to={path}
-            className={`px-8 ${
-                isActive ? 'text-neutral-100 border-b-4' : 'text-neutral-600'
-            }`}
+            className={cx(
+                isActive ? 'text-neutral-100 border-b-4' : 'text-neutral-600',
+                'pb-2'
+            )}
         >
             {name}
         </Link>

@@ -46,10 +46,7 @@ export const Navbar: FC = () => {
 
     return (
         <>
-            <div
-                className="w-full pt-4
-            bg-black-900"
-            >
+            <div className="w-full pt-4 bg-black-900">
                 <div
                     className="w-full max-w-4xl mx-auto
                 flex flex-col gap-4"
@@ -62,7 +59,7 @@ export const Navbar: FC = () => {
                                 className="flex-0 w-10 hover:scale-105"
                             />
                         </Link>
-                        <h1 className="text-2xl font-bold">
+                        <h1 className="text-xl font-bold">
                             {app_id
                                 ? (deploy_id
                                     ? `Deployment #${deploy_id}`
@@ -75,10 +72,10 @@ export const Navbar: FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="sticky top-0 left-0 right-0 w-full flex h-12 items-end bg-black-900 border-b-2 border-neutral-700">
+            <div className="sticky top-0 left-0 right-0 w-full flex h-16 items-end bg-black-900 border-b-2 border-neutral-700">
                 <div className="flex justify-between containerd">
                     {!app_id && (
-                        <div className="flex gap-4">
+                        <div className="flex gap-6">
                             {links.map((link) => (
                                 <NavbarLink
                                     key={link.name}
@@ -90,7 +87,7 @@ export const Navbar: FC = () => {
                         </div>
                     )}
                     {app_id && (
-                        <div className="flex gap-4">
+                        <div className="flex gap-6">
                             <NavbarLink
                                 name="Application"
                                 path={'/app/' + app_id}
