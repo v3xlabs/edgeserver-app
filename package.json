@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "license": "GPL-3.0",
     "author": {
-        "name": "lvkdotsh",
-        "url": "https://lvk.sh"
+        "name": "Lvkdotsh",
+        "url": "http://lvk.sh"
     },
     "scripts": {
         "dev": "parcel src/index.html",
@@ -21,13 +21,11 @@
     "dependencies": {
         "@babel/core": "^7.18.2",
         "@rainbow-me/rainbowkit": "^0.2.1",
-        "date-fns": "^2.28.0",
         "ethers": "5.5.1",
         "keccak": "^3.0.2",
         "postcss": "^8.0.9",
         "react": "^18.0.9",
         "react-dom": "^18.0.9",
-        "react-query": "^3.39.1",
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
         "sass": "^1.52.1",
