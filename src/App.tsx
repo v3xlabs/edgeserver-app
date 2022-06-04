@@ -29,6 +29,9 @@ export const App: FC = () => {
                     <Route path="settings" element={<AppSettingsPage />} />
                 </Route>
             </Routes>
+            <div className="w-full h-28 flex flex-end justify-center items-end pb-8 brightness-50">
+                <p className="w-fit">EDGESERVER.IO - Signal</p>
+            </div>
         </div>
     );
 };
