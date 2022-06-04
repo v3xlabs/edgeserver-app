@@ -1,12 +1,8 @@
-// import { useJWT } from '@utils/useAuth';
-import { useQuery } from 'react-query';
+import { useOutletContext } from 'react-router';
+import { Application } from 'src/types/Application';
 
-export const useApp = (app_id: string) => {
-    // const { token } = useJWT();
+export const useApp = () => {
+    const context = useOutletContext() as { app: Application };
 
-    return useQuery('/app/' + app_id, {
-        queryFn: async () => {
-            // fetch();
-        },
-    });
+    return context.app;
 };

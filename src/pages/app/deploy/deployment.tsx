@@ -1,4 +1,6 @@
+import { useApp } from '@utils/queries/useApp';
 import { FC } from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +9,7 @@ export const DeploymentPage: FC = () => {
         app_id: string;
         deploy_id: string;
     }>();
+    const app = useApp();
 
     // const timeDistance = useMemo(
     //     () =>
@@ -16,6 +19,9 @@ export const DeploymentPage: FC = () => {
 
     return (
         <div className="containerd pt-8">
+            <Helmet>
+                <title>{app.name} / Deployment</title>
+            </Helmet>
             <h2 className="text-xl font-bold">Deployment / {deploy_id}</h2>
             <p>App / {app_id}</p>
             <div className="card p-4 mt-4">
