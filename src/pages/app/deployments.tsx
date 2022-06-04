@@ -1,7 +1,8 @@
+import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
 import { formatDistance } from 'date-fns';
 import { FC, useMemo } from 'react';
-import { useParams } from 'react-router';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Deployment } from 'src/types/Deployment';
 
@@ -31,8 +32,8 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
 };
 
 const DeploymentList: FC = () => {
-    const { app_id } = useParams<{ app_id: string }>();
-    const { data, isLoading, isSuccess } = useDeployments(app_id);
+    const app = useApp();
+    const { data, isLoading, isSuccess } = useDeployments(app.app_id);
     const sorted_deployments = useMemo(() => {
         if (!isSuccess) return [];
 
@@ -45,8 +46,6 @@ const DeploymentList: FC = () => {
         );
     }, [data, isSuccess]);
 
-    if (!app_id) return <></>;
-
     return (
         <div className="gap-4 flex flex-col w-full">
             <h2 className="text-2xl">
@@ -57,7 +56,7 @@ const DeploymentList: FC = () => {
                 sorted_deployments.map((deployments) => (
                     <DeploymentLink
                         deployment={deployments}
-                        app_id={app_id}
+                        app_id={app.app_id}
                         key={deployments.deploy_id}
                     />
                 ))}
@@ -66,8 +65,13 @@ const DeploymentList: FC = () => {
 };
 
 export const AppDeploymentsPage: FC = () => {
+    const app = useApp();
+
     return (
         <div className="containerd pt-8">
+            <Helmet>
+                <title>{app.name} / Deployments</title>
+            </Helmet>
             <DeploymentList />
         </div>
     );

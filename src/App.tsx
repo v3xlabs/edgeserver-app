@@ -1,4 +1,5 @@
 import { AppPage } from '@pages/app';
+import { AppContainer } from '@pages/app/_container';
 import { DeploymentPage } from '@pages/app/deploy/deployment';
 import { AppDeploymentsPage } from '@pages/app/deployments';
 import { AppSettingsPage } from '@pages/app/settings';
@@ -16,7 +17,7 @@ export const App: FC = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="settings" element={<SettingsPage />} />
-                <Route path="app/:app_id">
+                <Route path="app/:app_id" element={<AppContainer />}>
                     <Route path="" element={<AppPage />} />
                     <Route
                         path="deployments"
