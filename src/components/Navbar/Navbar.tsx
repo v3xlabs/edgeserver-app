@@ -1,3 +1,4 @@
+import { useAppByID } from '@utils/queries/useAppByID';
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import icon from 'url:../../../assets/signal.svg';
@@ -43,6 +44,7 @@ export const Navbar: FC = () => {
                 undefined,
         };
     }, [pathname]);
+    const app = useAppByID(app_id);
 
     return (
         <>
@@ -63,7 +65,9 @@ export const Navbar: FC = () => {
                             {app_id
                                 ? deploy_id
                                     ? `Deployment #${deploy_id}`
-                                    : `App #${app_id}`
+                                    : `${
+                                          (app?.data && app.data.name) || app_id
+                                      }`
                                 : 'Edge Server'}
                         </h1>
                         <div className="ml-auto">
