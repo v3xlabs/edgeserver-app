@@ -23,7 +23,7 @@ export const NavbarLink: FC<{
             to={path}
             className={cx(
                 isActive ? 'text-neutral-100 border-b-4' : 'text-neutral-600',
-                'pb-2'
+                'pb-2 px-3'
             )}
         >
             {name}
