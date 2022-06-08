@@ -1,20 +1,26 @@
 import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
-import { formatDistance } from 'date-fns';
+import { formatDistance, isValid } from 'date-fns';
 import { FC, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Deployment } from 'src/types/Deployment';
+import { decode } from 'sunflake';
 
 const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     deployment,
     app_id,
 }) => {
-    const timeDistance = useMemo(
-        () =>
-            formatDistance(new Date(), new Date(deployment.timestamp)) + ' ago',
-        [deployment.timestamp]
-    );
+    const timeDistance = useMemo(() => {
+        const decoded = decode(deployment.deploy_id);
+        const date_s = Number.parseInt(decoded.time.toString());
+
+        if (!isValid(new Date(date_s))) return 'Unknown';
+
+        if (!decoded.time) return 'Error';
+
+        return formatDistance(new Date(), date_s) + ' ago';
+    }, [deployment.timestamp]);
 
     return (
         <Link
@@ -39,11 +45,20 @@ const DeploymentList: FC = () => {
 
         if (!data) return [];
 
-        return [...data].sort(
-            (a, b) =>
-                new Date(b.timestamp).getTime() -
-                new Date(a.timestamp).getTime()
-        );
+        return [...data].sort((a, b) => {
+            const _a = BigInt(a.deploy_id);
+            const _b = BigInt(b.deploy_id);
+
+            if (_a > _b) {
+                return 1;
+            }
+
+            if (_a < _b) {
+                return -1;
+            }
+
+            return 0;
+        });
     }, [data, isSuccess]);
 
     return (
