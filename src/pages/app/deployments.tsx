@@ -46,18 +46,10 @@ const DeploymentList: FC = () => {
         if (!data) return [];
 
         return [...data].sort((a, b) => {
-            const _a = BigInt(a.deploy_id);
-            const _b = BigInt(b.deploy_id);
+            if (BigInt(a.deploy_id) < BigInt(b.deploy_id)) return 1;
 
-            if (_a > _b) {
-                return 1;
-            }
-
-            if (_a < _b) {
-                return -1;
-            }
-
-            return 0;
+            // ids will never be equal to each other
+            return -1;
         });
     }, [data, isSuccess]);
 
