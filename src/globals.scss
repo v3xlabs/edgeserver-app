@@ -37,7 +37,14 @@ a {
 }
 
 .card {
-    @apply border-neutral-400 dark:border-neutral-700 border-2 rounded-lg;
+    @apply border-neutral-400 dark:border-neutral-700 border rounded-lg p-4 hover:bg-black-700 block;
+}
+
+.inset {
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
 }
 
 .hvr-hover {
