@@ -1,12 +1,63 @@
 import { Button } from '@components/Button';
 import { CreateAppModal } from '@components/CreateAppModal/CreateAppModal';
 import { useApps } from '@utils/queries/useApps';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Application } from 'src/types/Application';
+
+const ApplicationCard: FC<{ application: Application }> = ({ application }) => {
+    const [previewURL, setPreviewURL] = useState('');
+
+    useEffect(() => {
+        fetch(
+            'https://fuckcors.app/https://webshot.nodesite.eu:20122/render?url=' +
+                encodeURIComponent(
+                    'https://' + application.name.replace(/-/g, '.')
+                ),
+            { redirect: 'follow' }
+        ).then(async (v) => {
+            // console.log(v);
+            const text = await v.text();
+
+            const matches = new RegExp(/src="(?<yes>.*?)"/g).exec(text);
+
+            if (!matches) {
+                setPreviewURL('');
+
+                return;
+            }
+
+            setPreviewURL(
+                'https://webshot.nodesite.eu:20122' + matches?.groups?.yes
+            );
+        });
+    }, [application]);
+
+    return (
+        <Link className="card" to={'/app/' + application.app_id}>
+            <div className="w-full flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700">
+                {previewURL && (
+                    <img
+                        src={previewURL}
+                        alt="website preview"
+                        className="w-full aspect-video object-cover object-top border rounded-md"
+                    />
+                )}
+            </div>
+            <div className="mt-4">
+                <h2 className="text-lg font-bold pb-2">{application.name}</h2>
+                <p className="text-sm">
+                    {application.domain_id || 'No Domain Assigned'}
+                </p>
+            </div>
+        </Link>
+    );
+};
 
 const AppsList: FC = () => {
     const { data, isLoading, isSuccess } = useApps();
     const [isCreatingApp, setCreatingApp] = useState(false);
+    const [renderURLS, setRenderURLS] = useState({});
 
     return (
         <div className="gap-4 flex flex-col w-full">
@@ -33,18 +84,10 @@ const AppsList: FC = () => {
             {data && isSuccess && (
                 <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-2">
                     {data.map((project) => (
-                        <Link
+                        <ApplicationCard
                             key={project.app_id}
-                            className="card"
-                            to={'/app/' + project.app_id}
-                        >
-                            <h2 className="text-lg font-bold pb-2">
-                                {project.name}
-                            </h2>
-                            <p className="text-sm">
-                                {project.domain_id || 'No Domain Assigned'}
-                            </p>
-                        </Link>
+                            application={project}
+                        />
                     ))}
                 </div>
             )}
