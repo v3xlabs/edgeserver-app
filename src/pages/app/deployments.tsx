@@ -31,6 +31,8 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
             <div className="flex-1">
                 <h3>{deployment.deploy_id}</h3>
                 <p className="text-sm text-neutral-400">{deployment.sid}</p>
+                {deployment.comment && <p>{deployment.comment}</p>}
+                {deployment.git_actor && <p>@{deployment.git_actor}</p>}
             </div>
             <div className="text-sm text-neutral-400">{timeDistance}</div>
         </Link>
