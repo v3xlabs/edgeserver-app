@@ -3,9 +3,6 @@ name: Lint
 on:
   push:
  
-env:
-  NODE_VERSION: 16
- 
 jobs:
   linting:
     name: Linting
@@ -13,11 +10,12 @@ jobs:
     steps:
       - name: Code Checkout
         uses: actions/checkout@v2
- 
-      - uses: borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v2
         with:
-          cmd: install # Install dependencies
- 
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: lint
+          node-version: '16.9.1'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn
+      - name: Build
+        run: yarn install
+      - name: Build
+        run: yarn lint
