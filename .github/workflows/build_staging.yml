@@ -1,4 +1,4 @@
-name: Deploy to signal
+name: Deploy to Staging
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          API_URL: 'https://signal.lvksh.cloud'
+          API_URL: 'https://staging-api.edgeserver.io'
       - uses: vimtor/action-zip@v1
         with:
           files: dist/

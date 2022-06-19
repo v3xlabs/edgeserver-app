@@ -1,4 +1,4 @@
-name: Deploy to signal
+name: Deploy to Production
 
 on:
   push:
