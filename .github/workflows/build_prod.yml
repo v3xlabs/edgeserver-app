@@ -2,8 +2,8 @@ name: Deploy to signal
 
 on:
   push:
-    branches:
-      - "master"
+    tags:
+      - 'v*.*.*'
 
 jobs:
   zip-files:
