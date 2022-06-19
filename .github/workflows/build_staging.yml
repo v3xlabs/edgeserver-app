@@ -1,0 +1,36 @@
+name: Deploy to signal
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  zip-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.9.1'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn
+      - name: Build
+        run: yarn build
+        env:
+          API_URL: 'https://signal.lvksh.cloud'
+      - uses: vimtor/action-zip@v1
+        with:
+          files: dist/
+          dest: result.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/result.zip
+      - name: Deploy Stage
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: 'https://signal.lvksh.cloud/deployments/push?site=61535119206256640&git_sha=${{ github.sha }}&git_src=1&git_type=1&git_actor=${{ github.actor }}&comment=${{ github.event.head_commit.message }}'
+          method: 'PUT'
+          bearerToken: ${{ secrets.SIGNAL_TOKEN }}
+          files: '{ "data": "${{ github.workspace }}/result.zip" }'
