@@ -34,7 +34,7 @@ const ApplicationCard: FC<{ application: Application }> = ({ application }) => {
     }, [application]);
 
     return (
-        <Link className="card" to={'/app/' + application.app_id}>
+        <Link className="card p-2" to={'/app/' + application.app_id}>
             <div className="w-full flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700">
                 {previewURL && (
                     <img
@@ -82,7 +82,7 @@ const AppsList: FC = () => {
             </div>
             {isLoading && <p>Loading Applications...</p>}
             {data && isSuccess && (
-                <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-2">
+                <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-3">
                     {data.map((project) => (
                         <ApplicationCard
                             key={project.app_id}
