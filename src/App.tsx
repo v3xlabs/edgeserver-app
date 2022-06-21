@@ -3,6 +3,7 @@ import { AppContainer } from '@pages/app/_container';
 import { DeploymentPage } from '@pages/app/deploy/deployment';
 import { AppDeploymentsPage } from '@pages/app/deployments';
 import { AppSettingsPage } from '@pages/app/settings';
+import { KeysPage } from '@pages/keys';
 import { SettingsPage } from '@pages/settings';
 import { FC } from 'react';
 import { Route, Routes } from 'react-router';
@@ -16,6 +17,7 @@ export const App: FC = () => {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="keys" element={<KeysPage />} />
                 <Route path="settings" element={<SettingsPage />} />
                 <Route path="app/:app_id" element={<AppContainer />}>
                     <Route path="" element={<AppPage />} />

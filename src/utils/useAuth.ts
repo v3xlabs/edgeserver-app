@@ -4,6 +4,7 @@ import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { environment } from './enviroment';
+import { deleteSelfAuthKey } from './queries/deleteAuthKey';
 
 type JWTData = {
     token: string;
@@ -16,7 +17,16 @@ export const useJWT = create(
         (set) => ({
             token: '',
             setToken: (token) => set((_state) => ({ token })),
-            resetToken: () => set((_state) => ({ token: '' })),
+            resetToken: () =>
+                set((_state) => {
+                    try {
+                        deleteSelfAuthKey(_state.token);
+                    } catch {
+                        console.log('failed to delete own auth key, skip');
+                    }
+
+                    return { token: '' };
+                }),
         }),
         { name: 'SIGNAL-token' }
     )

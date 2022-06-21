@@ -17,6 +17,10 @@ const links: {
         end: true,
     },
     {
+        name: 'Auth Keys',
+        path: '/keys',
+    },
+    {
         name: 'Settings',
         path: '/settings',
     },

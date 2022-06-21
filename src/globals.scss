@@ -37,7 +37,7 @@ a {
 }
 
 .card {
-    @apply border-neutral-400 dark:border-neutral-700 border rounded-lg p-4 hover:bg-black-700 block;
+    @apply border-neutral-400 dark:border-neutral-700 border rounded-lg hover:bg-black-700;
 }
 
 .inset {
@@ -83,4 +83,20 @@ a {
 
 .link {
     @apply text-neutral-400 hover:brightness-75 hover:underline;
+}
+
+.human-slider {
+    width: 100%;
+    height: 2rem;
+    padding: 0;
+    overflow: hidden;
+    background: inherit;
+    -webkit-appearance: none;
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 2rem;
+        height: 2rem;
+        background: #fff;
+    }
 }
