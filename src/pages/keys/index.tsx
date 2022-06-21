@@ -15,11 +15,8 @@ const KeysTableRow: FC<{
     const [hasDeleteOpen, setDeleteOpen] = useState(false);
     const lastUsed = useMemo(
         () =>
-            auth_key.last_use != 0
-                ? formatDistance(
-                      new Date(auth_key.last_use.toString()),
-                      new Date()
-                  )
+            auth_key.last_use != 0 && auth_key.last_use
+                ? formatDistance(new Date(auth_key.last_use), new Date())
                 : '',
         [auth_key]
     );
