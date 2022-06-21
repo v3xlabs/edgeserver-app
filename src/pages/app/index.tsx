@@ -2,9 +2,8 @@ import { Button } from '@components/Button';
 import { useApp } from '@utils/queries/useApp';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Application } from 'src/types/Application';
 
-export const AppPage: FC<{ application: Application }> = () => {
+export const AppPage: FC = () => {
     const app = useApp();
 
     return (

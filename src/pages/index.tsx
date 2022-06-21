@@ -57,7 +57,7 @@ const ApplicationCard: FC<{ application: Application }> = ({ application }) => {
 const AppsList: FC = () => {
     const { data, isLoading, isSuccess } = useApps();
     const [isCreatingApp, setCreatingApp] = useState(false);
-    const [renderURLS, setRenderURLS] = useState({});
+    const [renderURLs, setRenderURLs] = useState({});
 
     return (
         <div className="gap-4 flex flex-col w-full">
