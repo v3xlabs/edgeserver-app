@@ -16,7 +16,10 @@ const KeysTableRow: FC<{
     const lastUsed = useMemo(
         () =>
             auth_key.last_use != 0
-                ? formatDistance(auth_key.last_use, new Date())
+                ? formatDistance(
+                      new Date(auth_key.last_use.toString()),
+                      new Date()
+                  )
                 : '',
         [auth_key]
     );
