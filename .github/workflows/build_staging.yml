@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          API_URL: 'https://staging-api.edgeserver.io'
+          API_URL: 'https://api.edgeserver.dev'
       - uses: vimtor/action-zip@v1
         with:
           files: dist/
