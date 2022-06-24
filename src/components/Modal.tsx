@@ -1,13 +1,11 @@
 import { FC, PropsWithChildren } from 'react';
 
-type ModalComponent = FC<
-    {
-        label: string;
-        onClose: () => void;
-    } & PropsWithChildren
->;
+type ModalComponent = {
+    label: string;
+    onClose: () => void;
+} & PropsWithChildren;
 
-export const Modal: ModalComponent = ({ label, onClose, children }) => {
+export const Modal: FC<ModalComponent> = ({ label, onClose, children }) => {
     return (
         <div>
             <div
