@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Button } from '@components/Button';
+import { Modal } from '@components/Modal';
 import { cx } from '@utils/cx';
 import { environment } from '@utils/enviroment';
 import { useJWT } from '@utils/useAuth';
@@ -126,98 +127,59 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
     }, []);
 
     return (
-        <div>
-            <div
-                id="authentication-modal"
-                tabIndex={-1}
-                aria-hidden="true"
-                className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-neutral-900 bg-opacity-80"
-            >
-                <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-                    <div className="relative bg-white rounded-lg shadow dark:bg-neutral-800 border-white border">
-                        <button
-                            type="button"
-                            className="absolute top-3 right-2.5 text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-800 dark:hover:text-white"
-                            data-modal-toggle="authentication-modal"
-                            onClick={onClose}
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                ></path>
-                            </svg>
-                        </button>
-                        <div className="py-6 px-6 lg:px-8">
-                            <h3 className="mb-4 text-xl font-medium text-neutral-900 dark:text-white">
-                                App Creator
-                            </h3>
-                            <form
-                                className="space-y-6"
-                                onSubmit={handleSubmit(onSubmit)}
-                            >
-                                <div>
-                                    <label
-                                        htmlFor="domain"
-                                        className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 pt-4 mb-2"
-                                    >
-                                        Where will this app be available?
-                                    </label>
-                                    <div className="flex items-center gap-2 text-neutral-500">
-                                        <div>https://</div>
-                                        <input
-                                            type="text"
-                                            id="domain"
-                                            className={cx(
-                                                'text-sm rounded-lg block w-full p-2.5 border',
-                                                errors.domain
-                                                    ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
-                                                    : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
-                                            )}
-                                            placeholder="edgeserver.app"
-                                            required
-                                            {...register('domain')}
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2">
-                                        And update your DNS records to include
-                                    </p>
-                                    <code className="p-2 bg-black-500 w-full block mt-2">
-                                        {(watch('domain') || 'yoursite.here') +
-                                            ' CNAME web.lvk.sh'}
-                                    </code>
-                                </div>
-                                <div className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2">
-                                    DNS Records may take up to 24 hours to
-                                    update. Yes, the system is archaic. I&apos;m
-                                    impatient too
-                                </div>
-                                <Button
-                                    type="submit"
-                                    disabled={isSubmitting || !isValid}
-                                    pending={isSubmitting}
-                                    className="w-full whitespace-pre justify-center"
-                                    label={
-                                        isValid
-                                            ? isSubmitting
-                                                ? 'Pending...'
-                                                : 'Launch  🚀'
-                                            : 'Incorrect URL'
-                                    }
-                                />
-                            </form>
-                        </div>
+        <Modal label="App Creator" onClose={onClose}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <label
+                        htmlFor="domain"
+                        className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 pt-4 mb-2"
+                    >
+                        Where will this app be available?
+                    </label>
+                    <div className="flex items-center gap-2 text-neutral-500">
+                        <div>https://</div>
+                        <input
+                            type="text"
+                            id="domain"
+                            className={cx(
+                                'text-sm rounded-lg block w-full p-2.5 border',
+                                errors.domain
+                                    ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
+                                    : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
+                            )}
+                            placeholder="edgeserver.app"
+                            required
+                            {...register('domain')}
+                        />
                     </div>
                 </div>
-            </div>
-        </div>
+                <div>
+                    <p className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2">
+                        And update your DNS records to include
+                    </p>
+                    <code className="p-2 bg-black-500 w-full block mt-2">
+                        {(watch('domain') || 'yoursite.here') +
+                            ' CNAME web.lvk.sh'}
+                    </code>
+                </div>
+                <div className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2">
+                    DNS Records may take up to 24 hours to update. Yes, the
+                    system is archaic. I&apos;m impatient too
+                </div>
+                <Button
+                    type="submit"
+                    disabled={isSubmitting || !isValid}
+                    pending={isSubmitting}
+                    className="w-full whitespace-pre justify-center"
+                    label={
+                        isValid
+                            ? isSubmitting
+                                ? 'Pending...'
+                                : 'Launch  🚀'
+                            : 'Incorrect URL'
+                    }
+                />
+            </form>
+        </Modal>
     );
 };
