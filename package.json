@@ -7,7 +7,7 @@
         "url": "https://lvk.sh"
     },
     "scripts": {
-        "dev": "parcel src/index.html",
+        "dev": "parcel -p 1235 src/index.html",
         "build": "parcel build src/index.html",
         "lint": "eslint -c .eslintrc.json --ext .ts,.tsx,.json ./src",
         "lint:fix": "echo Linting... && npm run lint -- --fix"
