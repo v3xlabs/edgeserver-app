@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useAccount } from 'wagmi';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -60,86 +61,43 @@ export const useWhitelist = (address: string) => {
     return whitelisted;
 };
 
-export const useAdminStore = create<{
-    configured: boolean | 'unchecked' | 'pending';
-    fetchConfigured: () => void;
-
-    admin: boolean | 'unchecked' | 'pending';
-    fetchAdmin: () => void;
-}>((set) => ({
-    configured: 'unchecked',
-    fetchConfigured: async () => {
-        set({
-            admin: 'pending',
-        });
-
-        const response = await fetch(
-            environment.API_URL + '/api/admin/setup/check'
+export const useSetupCheck = () =>
+    useQuery('/admin/setup/check', async () => {
+        const userDataRequest = await fetch(
+            environment.API_URL + '/api/admin/setup/check',
+            {
+                method: 'GET',
+            }
         );
 
-        const body = await response.json();
+        if (userDataRequest.status != 200) return;
 
-        set({
-            configured: !!body['configured'],
-        });
-    },
-
-    admin: 'unchecked',
-    fetchAdmin: async () => {
-        set({
-            admin: 'pending',
-        });
-
-        const response = await fetch(environment.API_URL + '/api/admin/check', {
-            headers: {
-                Authorization: 'Bearer ' + useJWT.getState().token,
-            },
-        });
-
-        const body = await response.json();
-
-        set({
-            admin: !!body['admin'],
-        });
-    },
-}));
-
-export const useSetup = () => {
-    const { configured, fetchConfigured } = useAdminStore((state) => ({
-        configured: state.configured,
-        fetchConfigured: state.fetchConfigured,
-    }));
-
-    useEffect(() => {
-        if (configured === 'unchecked') {
-            fetchConfigured();
-        }
-    }, []);
-
-    return configured;
-};
-
-export const useAdmin = () => {
-    const { admin, fetchAdmin } = useAdminStore((state) => ({
-        admin: state.admin,
-        fetchAdmin: state.fetchAdmin,
-    }));
-
-    useEffect(() => {
-        if (admin === 'unchecked') {
-            fetchAdmin();
-        }
-    }, []);
-
-    return admin;
-};
+        return (await userDataRequest.json()) as { configured: boolean };
+    });
 
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
     const { data, isLoading, isSuccess } = useAccount();
     const whitelisted = useWhitelist(data?.address || '');
 
-    const configured = useSetup();
+    const { data: userData } = useQuery<{ admin: boolean }>(
+        '/user/' + data?.address,
+        async () => {
+            const userDataRequest = await fetch(
+                environment.API_URL + '/api/me',
+                {
+                    method: 'GET',
+                    headers: { Authorization: 'Bearer ' + token },
+                }
+            );
+
+            if (userDataRequest.status != 200) return;
+
+            return await userDataRequest.json();
+        }
+    );
+
+    const { data: configured } = useSetupCheck();
 
     if (!data?.address) return { state: 'no-wallet' };
 
@@ -149,7 +107,7 @@ export const useAuth = () => {
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
-    if (configured === false)
+    if (!configured?.configured)
         return { state: 'not-setup', address: data.address };
 
     if (!whitelisted)
@@ -157,5 +115,5 @@ export const useAuth = () => {
 
     if (!token) return { state: 'no-token', address: data.address };
 
-    return { state: 'authenticated', address: data.address };
+    return { state: 'authenticated', address: data.address, userData };
 };
