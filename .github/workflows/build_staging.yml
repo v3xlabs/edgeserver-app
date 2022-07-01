@@ -20,7 +20,7 @@ jobs:
         env:
           API_URL: 'https://api.edgeserver.dev'
       - name: Edgeserver Upload
-        uses: lvkdotsh/edgeserver-action@v0.0.34
+        uses: lvkdotsh/edgeserver-action@master
         with:
           app_id: '61535119206256640'
           server: https://api.edgeserver.io
