@@ -19,18 +19,10 @@ jobs:
         run: yarn build
         env:
           API_URL: 'https://api.edgeserver.dev'
-      - uses: vimtor/action-zip@v1
+      - name: Edgeserver Upload
+        uses: lvkdotsh/edgeserver-action@v0.0.34
         with:
-          files: dist/
-          dest: result.zip
-      - uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ${{ github.workspace }}/result.zip
-      - name: Deploy Stage
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: 'https://signal.lvksh.cloud/deployments/push?site=61535119206256640&git_sha=${{ github.sha }}&git_src=1&git_type=1&git_actor=${{ github.actor }}&comment=${{ github.event.head_commit.message }}'
-          method: 'PUT'
-          bearerToken: ${{ secrets.SIGNAL_TOKEN }}
-          files: '{ "data": "${{ github.workspace }}/result.zip" }'
+          app_id: '61535119206256640'
+          server: https://api.edgeserver.io
+          token: ${{ secrets.SIGNAL_TOKEN }}
+          directory: dist
