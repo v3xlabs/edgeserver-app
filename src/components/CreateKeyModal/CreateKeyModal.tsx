@@ -10,18 +10,11 @@ import { Clipboard } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { useSignMessage } from 'wagmi';
 
-type CreateTypeFormTemporary = {
-    expires: true;
-    expiresIn: string;
-};
-
-type CreateTypeFormPermanent = {
-    expires: false;
-};
-
 type CreateKeyForm = {
     permissions: string;
-} & (CreateTypeFormTemporary | CreateTypeFormPermanent);
+    expires: boolean;
+    expiresIn: string;
+};
 
 export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
     const {
@@ -156,7 +149,7 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                                     id="expiresIn"
                                     className={cx(
                                         'text-sm rounded-lg block w-full p-2.5 border',
-                                        errors.permissions
+                                        errors.expiresIn
                                             ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
                                             : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
                                     )}
