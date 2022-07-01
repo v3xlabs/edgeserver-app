@@ -14,9 +14,19 @@ jobs:
         with:
           node-version: '16.9.1'
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 6.0.2
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm install
       - name: Build
-        run: yarn build
+        run: pnpm build
         env:
           API_URL: 'https://api.edgeserver.dev'
       - name: Edgeserver Upload
