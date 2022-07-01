@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { useAuth } from '../../utils/useAuth';
+import { Setup } from './Setup';
 import { LoginStepOne } from './StepOne';
 import { LoginStepTwo } from './StepTwo';
 import { Whitelist } from './Whitelist';
@@ -13,6 +14,7 @@ export const Login: FC = () => {
             {state == 'no-wallet' && <LoginStepOne />}
             {state == 'no-token' && <LoginStepTwo />}
             {state == 'not-whitelisted' && <Whitelist />}
+            {state == 'not-setup' && <Setup />}
         </div>
     );
 };

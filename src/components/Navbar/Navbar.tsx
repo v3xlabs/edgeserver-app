@@ -1,4 +1,5 @@
 import { useAppByID } from '@utils/queries/useAppByID';
+import { useAuth } from '@utils/useAuth';
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import icon from 'url:../../../assets/signal.svg';
@@ -27,6 +28,7 @@ const links: {
 ];
 
 export const Navbar: FC = () => {
+    const { userData } = useAuth();
     // const app_id = useAppData((state) => state.app_id);
     const { pathname } = useLocation();
     const { app_id, deploy_id } = useMemo(() => {
@@ -49,6 +51,8 @@ export const Navbar: FC = () => {
         };
     }, [pathname]);
     const app = useAppByID(app_id);
+
+    const admin = userData && userData.admin;
 
     return (
         <>
@@ -92,6 +96,14 @@ export const Navbar: FC = () => {
                                     end={link.end || false}
                                 />
                             ))}
+
+                        {!app_id && admin === true && (
+                            <NavbarLink
+                                key={'admin'}
+                                name={'Admin'}
+                                path={'/admin'}
+                            />
+                        )}
 
                         {app_id && (
                             <>

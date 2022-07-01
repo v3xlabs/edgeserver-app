@@ -1,11 +1,18 @@
+import { cx } from '@utils/cx';
 import { FC, PropsWithChildren } from 'react';
 
 type ModalComponent = {
     label: string;
     onClose: () => void;
+    className?: string;
 } & PropsWithChildren;
 
-export const Modal: FC<ModalComponent> = ({ label, onClose, children }) => {
+export const Modal: FC<ModalComponent> = ({
+    label,
+    onClose,
+    children,
+    className = '',
+}) => {
     return (
         <div>
             <div
@@ -14,7 +21,12 @@ export const Modal: FC<ModalComponent> = ({ label, onClose, children }) => {
                 aria-hidden="true"
                 className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-neutral-900 bg-opacity-80"
             >
-                <div className="relative p-4 w-full max-w-md h-full md:h-auto">
+                <div
+                    className={cx(
+                        'relative p-4 w-full max-w-md h-full md:h-auto',
+                        className
+                    )}
+                >
                     <div className="relative bg-white rounded-lg shadow dark:bg-neutral-800 border-white border">
                         <button
                             type="button"

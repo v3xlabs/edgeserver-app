@@ -1,3 +1,4 @@
+import { AdminPage } from '@pages/admin';
 import { AppPage } from '@pages/app';
 import { AppContainer } from '@pages/app/_container';
 import { DeploymentPage } from '@pages/app/deploy/deployment';
@@ -19,6 +20,7 @@ export const App: FC = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="keys" element={<KeysPage />} />
                 <Route path="settings" element={<SettingsPage />} />
+                <Route path="admin" element={<AdminPage />} />
                 <Route path="app/:app_id" element={<AppContainer />}>
                     <Route path="" element={<AppPage />} />
                     <Route

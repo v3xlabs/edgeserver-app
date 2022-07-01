@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useAccount } from 'wagmi';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -33,7 +34,7 @@ export const useJWT = create(
 );
 
 export const useWhitelist = (address: string) => {
-    const [whitelisted, setWhitelisted] = useState(false);
+    const [whitelisted, setWhitelisted] = useState(true);
 
     useEffect(() => {
         if (!address) {
@@ -60,10 +61,43 @@ export const useWhitelist = (address: string) => {
     return whitelisted;
 };
 
+export const useSetupCheck = () =>
+    useQuery('/admin/setup/check', async () => {
+        const userDataRequest = await fetch(
+            environment.API_URL + '/api/admin/setup/check',
+            {
+                method: 'GET',
+            }
+        );
+
+        if (userDataRequest.status != 200) return;
+
+        return (await userDataRequest.json()) as { configured: boolean };
+    });
+
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
     const { data, isLoading, isSuccess } = useAccount();
     const whitelisted = useWhitelist(data?.address || '');
+
+    const { data: userData } = useQuery<{ admin: boolean }>(
+        '/user/' + data?.address,
+        async () => {
+            const userDataRequest = await fetch(
+                environment.API_URL + '/api/me',
+                {
+                    method: 'GET',
+                    headers: { Authorization: 'Bearer ' + token },
+                }
+            );
+
+            if (userDataRequest.status != 200) return;
+
+            return await userDataRequest.json();
+        }
+    );
+
+    const { data: configured } = useSetupCheck();
 
     if (!data?.address) return { state: 'no-wallet' };
 
@@ -73,10 +107,13 @@ export const useAuth = () => {
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
+    if (configured?.configured === false)
+        return { state: 'not-setup', address: data.address };
+
     if (!whitelisted)
         return { state: 'not-whitelisted', address: data.address };
 
     if (!token) return { state: 'no-token', address: data.address };
 
-    return { state: 'authenticated', address: data.address };
+    return { state: 'authenticated', address: data.address, userData };
 };

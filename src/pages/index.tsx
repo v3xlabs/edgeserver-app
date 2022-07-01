@@ -15,22 +15,24 @@ const ApplicationCard: FC<{ application: Application }> = ({ application }) => {
                     'https://' + application.name.replace(/-/g, '.')
                 ),
             { redirect: 'follow' }
-        ).then(async (v) => {
-            // console.log(v);
-            const text = await v.text();
+        )
+            .then(async (v) => {
+                // console.log(v);
+                const text = await v.text();
 
-            const matches = new RegExp(/src="(?<yes>.*?)"/g).exec(text);
+                const matches = new RegExp(/src="(?<yes>.*?)"/g).exec(text);
 
-            if (!matches) {
-                setPreviewURL('');
+                if (!matches) {
+                    setPreviewURL('');
 
-                return;
-            }
+                    return;
+                }
 
-            setPreviewURL(
-                'https://webshot.nodesite.eu:20122' + matches?.groups?.yes
-            );
-        });
+                setPreviewURL(
+                    'https://webshot.nodesite.eu:20122' + matches?.groups?.yes
+                );
+            })
+            .catch(console.error);
     }, [application]);
 
     return (
