@@ -10,13 +10,26 @@ import { Clipboard } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { useSignMessage } from 'wagmi';
 
+type CreateTypeFormTemporary = {
+    expires: true;
+    expiresIn: string;
+};
+
+type CreateTypeFormPermanent = {
+    expires: false;
+};
+
+type CreateKeyForm = {
+    permissions: string;
+} & (CreateTypeFormTemporary | CreateTypeFormPermanent);
+
 export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isSubmitting, isValid },
-    } = useForm<{ permissions: string }>({
+    } = useForm<CreateKeyForm>({
         reValidateMode: 'onChange',
         delayError: 100,
         mode: 'all',
@@ -34,11 +47,16 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                 errors: {},
             };
         },
+        defaultValues: {
+            expires: true,
+            permissions: '-1',
+            expiresIn: '10h',
+        },
     });
     const { data: signedData, signMessageAsync } = useSignMessage();
     const { token } = useJWT();
     const [generatedToken, setGeneratedToken] = useState('');
-    const onSubmit = useCallback(async (data: { permissions: string }) => {
+    const onSubmit = useCallback(async (data: CreateKeyForm) => {
         const decodedToken = decode(token) as {
             exp?: number;
             iat: number;
@@ -48,14 +66,18 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         };
 
         console.log({ decodedToken });
+        const formData: { permissions: string; expiresIn?: string } = {
+            permissions: data.permissions,
+            expiresIn: (data.expires && data.expiresIn) || '',
+        };
+
+        if (!data.expires) delete formData['expiresIn'];
+
         const payload = {
             action: 'CREATE_KEY',
             owner_id: decodedToken.owner_id,
             instance_id: decodedToken.instance_id,
-            data: {
-                permissions: data.permissions,
-                expiresIn: '10h',
-            },
+            data: formData,
         };
         const stringified_payload = JSON.stringify(payload, undefined, 2);
         const signed_key_request = await signMessageAsync({
@@ -108,6 +130,43 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                             />
                         </div>
                     </div>
+                    <div>
+                        <label
+                            htmlFor="expires"
+                            className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2"
+                        >
+                            Expires
+                        </label>
+                        <div className="block w-full">
+                            <input
+                                type="checkbox"
+                                id="expires"
+                                className="text-sm rounded-lg block p-2.5 border focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white"
+                                {...register('expires')}
+                            />
+                        </div>
+                    </div>
+                    {watch('expires') && (
+                        <div>
+                            <label htmlFor="expiresIn">Expires In</label>
+
+                            <div className="flex items-center gap-2 text-neutral-500">
+                                <input
+                                    type="text"
+                                    id="expiresIn"
+                                    className={cx(
+                                        'text-sm rounded-lg block w-full p-2.5 border',
+                                        errors.permissions
+                                            ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
+                                            : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
+                                    )}
+                                    placeholder="10h"
+                                    required
+                                    {...register('expiresIn')}
+                                />
+                            </div>
+                        </div>
+                    )}
                     <Button
                         type="submit"
                         disabled={isSubmitting || !isValid}
