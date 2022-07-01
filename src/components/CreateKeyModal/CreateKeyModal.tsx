@@ -5,6 +5,7 @@ import { cx } from '@utils/cx';
 import { environment } from '@utils/enviroment';
 import { useJWT } from '@utils/useAuth';
 import { decode } from 'jsonwebtoken';
+import ms from 'ms';
 import { FC, useCallback, useState } from 'react';
 import { Clipboard } from 'react-feather';
 import { useForm } from 'react-hook-form';
@@ -34,6 +35,22 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                         permissions: { type: 'minLength' },
                     },
                 };
+
+            if (values.expires) {
+                try {
+                    ms(values.expiresIn);
+                } catch {
+                    return {
+                        values: {},
+                        errors: {
+                            expiresIn: {
+                                type: 'pattern',
+                                message: 'Not a valid timestamp',
+                            },
+                        },
+                    };
+                }
+            }
 
             return {
                 values,
