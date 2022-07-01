@@ -1,4 +1,5 @@
 import { useAppByID } from '@utils/queries/useAppByID';
+import { useAdmin } from '@utils/useAuth';
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import icon from 'url:../../../assets/signal.svg';
@@ -50,6 +51,8 @@ export const Navbar: FC = () => {
     }, [pathname]);
     const app = useAppByID(app_id);
 
+    const admin = useAdmin();
+
     return (
         <>
             <div className="w-full pt-4 bg-black-900">
@@ -92,6 +95,14 @@ export const Navbar: FC = () => {
                                     end={link.end || false}
                                 />
                             ))}
+
+                        {!app_id && admin === true && (
+                            <NavbarLink
+                                key={'admin'}
+                                name={'Admin'}
+                                path={'/admin'}
+                            />
+                        )}
 
                         {app_id && (
                             <>

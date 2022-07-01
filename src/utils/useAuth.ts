@@ -33,7 +33,7 @@ export const useJWT = create(
 );
 
 export const useWhitelist = (address: string) => {
-    const [whitelisted, setWhitelisted] = useState(false);
+    const [whitelisted, setWhitelisted] = useState(true);
 
     useEffect(() => {
         if (!address) {
@@ -60,10 +60,86 @@ export const useWhitelist = (address: string) => {
     return whitelisted;
 };
 
+export const useAdminStore = create<{
+    configured: boolean | 'unchecked' | 'pending';
+    fetchConfigured: () => void;
+
+    admin: boolean | 'unchecked' | 'pending';
+    fetchAdmin: () => void;
+}>((set) => ({
+    configured: 'unchecked',
+    fetchConfigured: async () => {
+        set({
+            admin: 'pending',
+        });
+
+        const response = await fetch(
+            environment.API_URL + '/api/admin/setup/check'
+        );
+
+        const body = await response.json();
+
+        set({
+            configured: !!body['configured'],
+        });
+    },
+
+    admin: 'unchecked',
+    fetchAdmin: async () => {
+        set({
+            admin: 'pending',
+        });
+
+        const response = await fetch(environment.API_URL + '/api/admin/check', {
+            headers: {
+                Authorization: 'Bearer ' + useJWT.getState().token,
+            },
+        });
+
+        const body = await response.json();
+
+        set({
+            admin: !!body['admin'],
+        });
+    },
+}));
+
+export const useSetup = () => {
+    const { configured, fetchConfigured } = useAdminStore((state) => ({
+        configured: state.configured,
+        fetchConfigured: state.fetchConfigured,
+    }));
+
+    useEffect(() => {
+        if (configured === 'unchecked') {
+            fetchConfigured();
+        }
+    }, []);
+
+    return configured;
+};
+
+export const useAdmin = () => {
+    const { admin, fetchAdmin } = useAdminStore((state) => ({
+        admin: state.admin,
+        fetchAdmin: state.fetchAdmin,
+    }));
+
+    useEffect(() => {
+        if (admin === 'unchecked') {
+            fetchAdmin();
+        }
+    }, []);
+
+    return admin;
+};
+
 export const useAuth = () => {
     const token = useJWT((state) => state.token);
     const { data, isLoading, isSuccess } = useAccount();
     const whitelisted = useWhitelist(data?.address || '');
+
+    const configured = useSetup();
 
     if (!data?.address) return { state: 'no-wallet' };
 
@@ -72,6 +148,9 @@ export const useAuth = () => {
     if (isLoading) return { state: 'loading' };
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
+
+    if (configured === false)
+        return { state: 'not-setup', address: data.address };
 
     if (!whitelisted)
         return { state: 'not-whitelisted', address: data.address };
