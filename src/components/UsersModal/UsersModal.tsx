@@ -132,11 +132,12 @@ export const UsersModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                         />
                     </div>
 
-                    {ensAddress.data && (
-                        <div className="mt-2 text-neutral-500">
-                            {ensAddress.data}
-                        </div>
-                    )}
+                    {ensAddress.data &&
+                        ensAddress.data !== watch('address') && (
+                            <div className="mt-2 text-neutral-500">
+                                {ensAddress.data}
+                            </div>
+                        )}
                 </div>
 
                 {usersError && (
