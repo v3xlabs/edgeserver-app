@@ -107,7 +107,7 @@ export const useAuth = () => {
 
     if (!data || !isSuccess) return { state: 'no-wallet' };
 
-    if (!configured?.configured)
+    if (configured?.configured === false)
         return { state: 'not-setup', address: data.address };
 
     if (!whitelisted)
