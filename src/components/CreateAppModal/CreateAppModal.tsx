@@ -81,7 +81,7 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                 {
                     method: 'POST',
                     body: JSON.stringify({
-                        name: data.domain.replace('.', '-'),
+                        name: data.domain.replace(/(\.|\s)/g, '-'),
                     }),
                     headers: {
                         'Content-Type': 'application/json',
