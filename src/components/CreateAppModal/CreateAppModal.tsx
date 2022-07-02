@@ -21,7 +21,7 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
             console.log('validating');
 
             if (
-                !/^((?!-))(xn--)?[\da-z][\d_a-z-]{0,61}[\da-z]{0,1}\.(xn--)?([\da-z-]{1,61}|[\da-z-]{1,30}\.[a-z]{2,})$/.test(
+                !/^((?!-))(xn--)?[\da-z][\w-]{0,61}[\da-z]*\.?((xn--)?([\d.a-z-]{1,61}|[\da-z-]{1,30})\.?[a-z]{2,})$/gim.test(
                     values.domain
                 )
             ) {
