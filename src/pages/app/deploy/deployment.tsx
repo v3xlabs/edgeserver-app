@@ -1,3 +1,4 @@
+import { environment } from '@utils/enviroment';
 import { useApp } from '@utils/queries/useApp';
 import { FC } from 'react';
 import { Helmet } from 'react-helmet';
@@ -24,6 +25,18 @@ export const DeploymentPage: FC = () => {
             </Helmet>
             <h2 className="text-xl font-bold">Deployment / {deploy_id}</h2>
             <p>App / {app_id}</p>
+            <div className="card p-4 mt-4">
+                <img
+                    src={
+                        environment.API_URL +
+                        '/api/image/deploy/' +
+                        deploy_id +
+                        '/root'
+                    }
+                    className="w-full rounded-lg"
+                    alt="Deployment Preview Render"
+                />
+            </div>
             <div className="card p-4 mt-4">
                 <p>Heya!</p>
                 <p>

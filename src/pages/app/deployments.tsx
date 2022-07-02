@@ -1,7 +1,8 @@
+import { environment } from '@utils/enviroment';
 import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
 import { formatDistance, isValid } from 'date-fns';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Deployment } from 'src/types/Deployment';
@@ -11,6 +12,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     deployment,
     app_id,
 }) => {
+    const [previewImage, setPreviewImage] = useState(true);
     const timeDistance = useMemo(() => {
         const decoded = decode(deployment.deploy_id);
         const date_s = Number.parseInt(decoded.time.toString());
@@ -28,6 +30,28 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
             className="p-4 border-2 card flex hover:bg-black-700"
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
+            <div className="flex mr-4">
+                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center">
+                    {previewImage && (
+                        <img
+                            src={
+                                environment.API_URL +
+                                '/api/image/deploy/' +
+                                deployment.deploy_id +
+                                '/128'
+                            }
+                            className="w-32 rounded-lg"
+                            alt="Deployment Preview Render"
+                            onError={() => {
+                                setPreviewImage(false);
+                            }}
+                        />
+                    )}
+                    {!previewImage && (
+                        <div className="brightness-75 font-bold">?</div>
+                    )}
+                </div>
+            </div>
             <div className="flex-1">
                 <h3>{deployment.deploy_id}</h3>
                 <p className="text-sm text-neutral-400">{deployment.sid}</p>
