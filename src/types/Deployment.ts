@@ -4,9 +4,5 @@ export type Deployment = {
     cid: string;
     sid: string;
     timestamp: string;
-    git_sha?: string;
-    git_actor?: string;
-    git_type?: string;
-    git_src?: string;
-    comment?: string;
+    context?: string;
 };

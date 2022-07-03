@@ -3,10 +3,102 @@ import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
 import { formatDistance, isValid } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
+import { GitHub } from 'react-feather';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Deployment } from 'src/types/Deployment';
 import { decode } from 'sunflake';
+
+type GithubDeployContextType = {
+    contextType: 'github-action';
+    data: {
+        event: string;
+        sha: string;
+        workflow: string;
+        runNumber: number;
+        runId: string;
+        server_url: string;
+        ref: string;
+        actor: string;
+        sender: string;
+        commit: {
+            author: {
+                email: string;
+                name: string;
+                username: string;
+            };
+            committer: {
+                email: string;
+                name: string;
+                username: string;
+            };
+            distinct: boolean;
+            id: string;
+            message: string;
+            timestamp: string;
+            tree_id: string;
+            url: string;
+        };
+    };
+};
+
+type UnknownDeployContextType = {
+    contextType: 'unknown';
+};
+
+type DeployContextType = GithubDeployContextType | UnknownDeployContextType;
+
+const DeploymentLinkInfo: FC<{
+    deployment: Deployment;
+}> = ({ deployment }) => {
+    const context: DeployContextType = useMemo(
+        () =>
+            deployment.context
+                ? JSON.parse(deployment.context)
+                : {
+                      contextType: 'unknown',
+                  },
+        [deployment]
+    );
+
+    if (context.contextType === 'github-action') {
+        return (
+            <div className="flex-1">
+                <h3>{context.data.commit.message} </h3>
+
+                <p className="text-sm text-neutral-300">
+                    🛠️ {context.data.workflow} #{context.data.runNumber}
+                </p>
+
+                <p className="text-sm text-neutral-300">
+                    🧍 {context.data.actor}
+                </p>
+
+                <a
+                    href={context.data.commit.url}
+                    className="text-xs text-neutral-400 hover:text-neutral-500"
+                    onClick={(event_) => {
+                        event_.preventDefault();
+                        window.open(context.data.commit.url);
+                    }}
+                >
+                    <GitHub
+                        size={'14px'}
+                        style={{ display: 'inline', marginInlineEnd: '4px' }}
+                    />
+                    #{context.data.sha.slice(0, 7)}
+                </a>
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex-1">
+            <h3>{deployment.deploy_id}</h3>
+            <p className="text-sm text-neutral-400">{deployment.sid}</p>
+        </div>
+    );
+};
 
 const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     deployment,
@@ -31,7 +123,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
             <div className="flex mr-4">
-                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center">
+                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center h-fit">
                     {previewImage && (
                         <img
                             src={
@@ -52,12 +144,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
                     )}
                 </div>
             </div>
-            <div className="flex-1">
-                <h3>{deployment.deploy_id}</h3>
-                <p className="text-sm text-neutral-400">{deployment.sid}</p>
-                {deployment.comment && <p>{deployment.comment}</p>}
-                {deployment.git_actor && <p>@{deployment.git_actor}</p>}
-            </div>
+            <DeploymentLinkInfo deployment={deployment} />
             <div className="text-sm text-neutral-400">{timeDistance}</div>
         </Link>
     );
