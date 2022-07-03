@@ -123,6 +123,7 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         }
 
         console.log('Successfully created', application_id, domain_id);
+        window.location.reload();
         onClose();
     }, []);
 
