@@ -37,7 +37,9 @@ const KeysTableRow: FC<{
                 🔑&nbsp;&nbsp;{auth_key.key.slice(0, 4)}...
                 {auth_key.key.slice(-2)}
             </td>
-            <td>{auth_key.permissions}</td>
+            <td className="text-center" >
+                {auth_key.permissions}
+            </td>
             <td>{auth_key.last_use && lastUsed}</td>
             <td className={auth_key.exp ? '' : 'text-neutral-500'}>
                 {expiresIn}
