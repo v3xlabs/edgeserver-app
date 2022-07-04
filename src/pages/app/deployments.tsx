@@ -1,3 +1,4 @@
+import { DeploymentLinkInfo } from '@components/DeploymentLinkInfo';
 import { environment } from '@utils/enviroment';
 import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
@@ -31,7 +32,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
             <div className="flex mr-4">
-                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center">
+                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center h-fit">
                     {previewImage && (
                         <img
                             src={
@@ -52,12 +53,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
                     )}
                 </div>
             </div>
-            <div className="flex-1">
-                <h3>{deployment.deploy_id}</h3>
-                <p className="text-sm text-neutral-400">{deployment.sid}</p>
-                {deployment.comment && <p>{deployment.comment}</p>}
-                {deployment.git_actor && <p>@{deployment.git_actor}</p>}
-            </div>
+            <DeploymentLinkInfo deployment={deployment} />
             <div className="text-sm text-neutral-400">{timeDistance}</div>
         </Link>
     );
