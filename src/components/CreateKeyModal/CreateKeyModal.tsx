@@ -8,11 +8,12 @@ import { decode } from 'jsonwebtoken';
 import ms from 'ms';
 import { FC, useCallback, useState } from 'react';
 import { Clipboard } from 'react-feather';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 import { useSignMessage } from 'wagmi';
 
 type CreateKeyForm = {
     permissions: string;
+    name: string;
     expires: boolean;
     expiresIn: string;
 };
@@ -28,28 +29,26 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         delayError: 100,
         mode: 'all',
         resolver: async (values) => {
+            const errors: FieldErrors<typeof values> = {};
+
+            if (values.name.length === 0) errors.name = { type: 'minLength' };
+
             if (values.permissions.length === 0)
-                return {
-                    values: {},
-                    errors: {
-                        permissions: { type: 'minLength' },
-                    },
-                };
+                errors.permissions = { type: 'minLength' };
 
             if (values.expires) {
                 try {
                     ms(values.expiresIn);
                 } catch {
-                    return {
-                        values: {},
-                        errors: {
-                            expiresIn: {
-                                type: 'pattern',
-                                message: 'Not a valid timestamp',
-                            },
-                        },
+                    errors.expiresIn = {
+                        type: 'pattern',
+                        message: 'Not a valid timestamp',
                     };
                 }
+            }
+
+            if (Object.keys(errors).length > 0) {
+                return { values: {}, errors };
             }
 
             return {
@@ -76,8 +75,13 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         };
 
         console.log({ decodedToken });
-        const formData: { permissions: string; expiresIn?: string } = {
+        const formData: {
+            permissions: string;
+            name: string;
+            expiresIn?: string;
+        } = {
             permissions: data.permissions,
+            name: data.name,
             expiresIn: (data.expires && data.expiresIn) || '',
         };
 
@@ -116,11 +120,34 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
     return (
         <Modal label="Key Creator" onClose={onClose}>
             {!generatedToken && (
-                <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2"
+                        >
+                            Name
+                        </label>
+                        <div className="flex items-center gap-2 text-neutral-500">
+                            <input
+                                type="text"
+                                id="name"
+                                className={cx(
+                                    'text-sm rounded-lg block w-full p-2.5 border',
+                                    errors.name
+                                        ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
+                                        : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
+                                )}
+                                placeholder="My Awesome Key"
+                                required
+                                {...register('name')}
+                            />
+                        </div>
+                    </div>
                     <div>
                         <label
                             htmlFor="permissions"
-                            className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 pt-4 mb-2"
+                            className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2"
                         >
                             Raw Permissions
                         </label>
