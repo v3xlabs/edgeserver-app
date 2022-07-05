@@ -19,11 +19,11 @@ export const Modal: FC<ModalComponent> = ({
                 id="authentication-modal"
                 tabIndex={-1}
                 aria-hidden="true"
-                className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-neutral-900 bg-opacity-80"
+                className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal h-full justify-center items-center bg-neutral-900 bg-opacity-80"
             >
                 <div
                     className={cx(
-                        'relative p-4 w-full max-w-md h-full md:h-auto',
+                        'relative p-4 w-full max-w-md h-fit',
                         className
                     )}
                 >
