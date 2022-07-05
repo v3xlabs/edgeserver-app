@@ -2,13 +2,14 @@ import { cx } from '@utils/cx';
 import { ButtonHTMLAttributes, FC, useMemo } from 'react';
 import { Loader } from 'react-feather';
 
-type Variants = 'primary' | 'delete' | 'disabled';
+type Variants = 'primary' | 'delete' | 'disabled' | 'add';
 
 const styles: Record<Variants, string> = {
     primary:
         'bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white focus:ring-blue-300',
     disabled: 'bg-neutral-700 text-neutral-400 text-white',
     delete: 'bg-red-700 hover:bg-red-800 text-white focus:ring-red-300',
+    add: 'bg-green-700 hover:bg-green-800 text-white focus:ring-green-300',
 };
 
 export const Button: FC<
