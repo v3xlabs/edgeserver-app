@@ -1,11 +1,10 @@
 // import { Button } from '@components/Button';
 import { Button } from '@components/Button';
 import { CreateKeyModal } from '@components/CreateKeyModal/CreateKeyModal';
-import { DeleteKeyModal } from '@components/DeleteKeyModal/DeleteKeyModal';
+import { KeyModal } from '@components/KeyModal/KeyModal';
 import { useKeys } from '@utils/queries/useKeys';
 import { formatDistance } from 'date-fns';
 import { FC, useMemo, useReducer, useState } from 'react';
-import { Trash2 } from 'react-feather';
 import { AuthKey } from 'src/types/AuthKey';
 
 const KeysTableRow: FC<{
@@ -13,47 +12,39 @@ const KeysTableRow: FC<{
     onDelete: (_id: string) => void;
 }> = ({ auth_key, onDelete }) => {
     const [hasDeleteOpen, setDeleteOpen] = useState(false);
+    const [hasModalOpen, setModalOpen] = useState(false);
     const lastUsed = useMemo(
         () =>
             auth_key.last_use != 0 && auth_key.last_use
-                ? formatDistance(new Date(auth_key.last_use), new Date())
+                ? formatDistance(new Date(auth_key.last_use), new Date()) +
+                  ' ago'
                 : '',
-        [auth_key]
-    );
-    const expiresIn = useMemo(
-        () =>
-            auth_key.exp && auth_key.exp != 1
-                ? formatDistance(
-                      new Date(Number.parseInt(auth_key.exp.toString())),
-                      Date.now()
-                  )
-                : 'Never',
         [auth_key]
     );
 
     return (
-        <tr key={auth_key.key} className="border border-neutral-600 h-12">
-            <td className="pl-4">
-                🔑&nbsp;&nbsp;{auth_key.key.slice(0, 4)}...
-                {auth_key.key.slice(-2)}
-            </td>
-            <td className="text-center" >
-                {auth_key.permissions}
-            </td>
-            <td>{auth_key.last_use && lastUsed}</td>
-            <td className={auth_key.exp ? '' : 'text-neutral-500'}>
+        <>
+            <tr
+                key={auth_key.key}
+                className="border border-neutral-600 h-12 cursor-pointer"
+                onClick={() => setModalOpen(true)}
+            >
+                <td className="pl-4">{auth_key.name ?? 'No Name'}</td>
+                {/* <td className="text-center">{auth_key.permissions}</td> */}
+                <td className="pl-4">{auth_key.last_use && lastUsed}</td>
+                {/* <td className={auth_key.exp ? '' : 'text-neutral-500'}>
                 {expiresIn}
-            </td>
-            <td className="text-center">
-                {auth_key.state == 0 ? (
-                    <span>Deactivated</span>
-                ) : (
-                    <div className={auth_key.exp ? 'text-purple-500' : ''}>
-                        {auth_key.exp ? 'Volatile' : 'Active'}
-                    </div>
-                )}
-            </td>
-            <td className="text-center">
+            </td> */}
+                <td className="pl-4">
+                    {auth_key.state == 0 ? (
+                        <span>Deactivated</span>
+                    ) : (
+                        <div className={auth_key.exp ? 'text-purple-500' : ''}>
+                            {auth_key.exp ? 'Volatile' : 'Active'}
+                        </div>
+                    )}
+                </td>
+                {/* <td className="text-center">
                 <button
                     onClick={() => setDeleteOpen(true)}
                     className="hover:scale-110 hover:text-red-600 focus:text-red-600 active:text-red-600 text-red-800"
@@ -67,8 +58,18 @@ const KeysTableRow: FC<{
                     onClose={() => setDeleteOpen(false)}
                     onDelete={onDelete}
                 />
+            )} */}
+            </tr>
+
+            {hasModalOpen && (
+                <KeyModal
+                    auth_key={auth_key}
+                    onClose={() => setModalOpen(false)}
+                    lastUsed={lastUsed}
+                    onDelete={onDelete}
+                />
             )}
-        </tr>
+        </>
     );
 };
 
@@ -80,41 +81,74 @@ const KeysTable: FC = () => {
     );
     const keys = useMemo(
         // eslint-disable-next-line sonarjs/cognitive-complexity
-        () =>
-            !data
-                ? []
-                : data.keys
-                      .filter((v) => !optimisticDeletes.includes(v.key))
-                      .sort((a, b) => {
-                          if (a.exp && b.exp) return a.key > b.key ? -1 : 1;
+        () => {
+            if (!data) return { volatile: [], active: [] };
 
-                          if (a.exp) return -1;
+            const base_keys = data.keys
+                .filter((v) => !optimisticDeletes.includes(v.key))
+                .sort((a, b) => {
+                    if (a.exp && b.exp) return a.key > b.key ? -1 : 1;
 
-                          if (b.exp) return 1;
+                    if (a.exp) return -1;
 
-                          return a.last_use > b.last_use ? -1 : 1;
-                      }),
+                    if (b.exp) return 1;
+
+                    return a.last_use > b.last_use ? -1 : 1;
+                });
+
+            return {
+                volatile: base_keys.filter((v) => v.exp),
+                active: base_keys.filter((v) => !v.exp),
+            };
+        },
         [data, optimisticDeletes]
     );
 
     return (
-        <table className="w-full">
-            <tr>
-                <th className="p-4">Key ID</th>
-                <th className="p-4">Permissions</th>
-                <th className="p-4">Last Used</th>
-                <th className="p-4">Expires In</th>
-                <th className="p-4">Status</th>
-                <th className="p-4">Actions</th>
-            </tr>
-            {keys.map((value) => (
-                <KeysTableRow
-                    key={value.key}
-                    auth_key={value}
-                    onDelete={addOptimisticDelete}
-                />
-            ))}
-        </table>
+        <>
+            <div className="card mt-4 p-8">
+                <h3 className="text-xl w-fit px-2 border-b-black-500 border-b-2 border-spacing-2 mb-2">
+                    Active Keys
+                </h3>
+                {/* <hr className="border-t-black-500 border-t-2" /> */}
+                <table className="w-full">
+                    <tr>
+                        <th className="px-4 py-2 text-left">Name</th>
+                        <th className="px-4 py-2 text-left">Last Used</th>
+                        <th className="px-4 py-2 text-left">Status</th>
+                    </tr>
+                    {keys.active.map((value) => (
+                        <KeysTableRow
+                            key={value.key}
+                            auth_key={value}
+                            onDelete={addOptimisticDelete}
+                        />
+                    ))}
+                </table>
+            </div>
+
+            <div className="card mt-4 p-8">
+                <h3 className="text-xl w-fit px-2 border-b-black-500 border-b-2 mb-2">
+                    Volatile Keys
+                </h3>
+                <table className="w-full">
+                    <tr>
+                        <th className="px-4 py-2 text-left">Name</th>
+                        <th className="px-4 py-2 text-left">Last Used</th>
+                        <th className="px-4 py-2 text-left">Status</th>
+                    </tr>
+
+                    {/* eslint-disable-next-line sonarjs/no-identical-functions */}
+                    {keys.volatile.map((value) => (
+                        <KeysTableRow
+                            key={value.key}
+                            auth_key={value}
+                            onDelete={addOptimisticDelete}
+                        />
+                    ))}
+                </table>
+            </div>
+        </>
     );
 };
 
@@ -147,9 +181,7 @@ export const KeysPage: FC = () => {
                     )}
                 </div>
             </div>
-            <div className="card mt-4 p-8">
-                <KeysTable />
-            </div>
+            <KeysTable />
         </div>
     );
 };
