@@ -56,7 +56,7 @@ export const Document = () => {
             >
                 <QueryClientProvider client={queryClient}>
                     <BrowserRouter>
-                        <div className="dark:bg-black-800 dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
+                        <div className="bg-texture dark:text-white text-black-800 bg-neutral-100 w-full min-h-screen">
                             <LoginFacade>
                                 <App />
                             </LoginFacade>
