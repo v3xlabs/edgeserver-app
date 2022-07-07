@@ -1,5 +1,4 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { capitalizeFirstLetter } from '@utils/capitalize';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
 import { useENS } from '@utils/queries/useENS';
@@ -16,53 +15,50 @@ export const UserProfile: FC = () => {
     if (!isSuccess || !userData || !userData.address) return <></>;
 
     return (
-        <div>
-            <ConnectButton.Custom>
-                {({ openAccountModal }) => {
-                    return (
-                        <button
-                            className="flex items-center gap-2"
-                            onClick={openAccountModal}
-                        >
-                            <div className="">
-                                <div className="text-2 font-bold text-right">
-                                    {Name
-                                        ? `${Name} (${formatAddress(
-                                              userData.address!
-                                          )})`
-                                        : formatAddress(userData.address!)}
-                                </div>
-                                <div className="text-1 opacity-50 text-right">
-                                    Logged in with{' '}
+        <ConnectButton.Custom>
+            {({ openAccountModal }) => {
+                return (
+                    <button
+                        className="flex items-center h-full pr-4 gap-2"
+                        onClick={openAccountModal}
+                    >
+                        <div className="">
+                            <div className="text-2 font-bold text-right leading-tight">
+                                {Name
+                                    ? `${Name}`
+                                    : formatAddress(userData.address!)}
+                            </div>
+                            <div className="text-1 opacity-50 text-right text-xs leading-3">
+                                {Name && formatAddress(userData.address!)}
+                                {/* Logged in with{' '}
                                     <b>
                                         {capitalizeFirstLetter(
                                             activeConnector?.id || 'unknown'
                                         )}
-                                    </b>
-                                </div>
+                                    </b> */}
                             </div>
-                            <div className="w-12 h-12 flex-shrink-0 rounded-full bg-neutral-700">
-                                {Avatar ? (
-                                    <img
-                                        src={Avatar}
-                                        className="w-12 h-12 rounded-full"
-                                        alt="ENSavatar"
-                                    />
-                                ) : (
-                                    <div
-                                        className="w-12 h-12 rounded-full overflow-hidden"
-                                        dangerouslySetInnerHTML={{
-                                            __html: gradientAvatar(
-                                                userData.address!
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            </div>
-                        </button>
-                    );
-                }}
-            </ConnectButton.Custom>
-        </div>
+                        </div>
+                        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-neutral-700">
+                            {Avatar ? (
+                                <img
+                                    src={Avatar}
+                                    className="w-10 h-10 rounded-full"
+                                    alt="ENSavatar"
+                                />
+                            ) : (
+                                <div
+                                    className="w-10 h-10 rounded-full overflow-hidden"
+                                    dangerouslySetInnerHTML={{
+                                        __html: gradientAvatar(
+                                            userData.address!
+                                        ),
+                                    }}
+                                />
+                            )}
+                        </div>
+                    </button>
+                );
+            }}
+        </ConnectButton.Custom>
     );
 };
