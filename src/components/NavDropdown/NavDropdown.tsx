@@ -45,7 +45,7 @@ export const NavDropdown: FC<{
                             {({ active, selected }) => (
                                 <li
                                     className={cx(
-                                        'w-auto h-16 flex items-center',
+                                        'w-auto h-16 flex items-center cursor-pointer',
                                         selected || active
                                             ? 'bg-neutral-800'
                                             : 'bg-black-800'

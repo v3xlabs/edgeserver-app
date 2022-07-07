@@ -57,7 +57,7 @@ export const Navbar: FC = () => {
 
     return (
         <>
-            <div className="flex w-full border-b border-neutral-700 h-16 bg-black-800">
+            <div className="flex w-full border-b border-neutral-700 h-16 bg-black-800 relative z-50">
                 <Link
                     className="flex gap-2 h-full items-center px-4 border-r border-neutral-700 hover:bg-neutral-800 cursor-pointer"
                     to="/"
