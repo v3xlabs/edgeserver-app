@@ -3,7 +3,7 @@ import { CreateAppModal } from '@components/CreateAppModal/CreateAppModal';
 import { environment } from '@utils/enviroment';
 import { useApps } from '@utils/queries/useApps';
 import { FC, useState } from 'react';
-import { GitHub } from 'react-feather';
+import { CheckCircle, GitHub } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { Application } from 'src/types/Application';
 
@@ -14,12 +14,29 @@ const ApplicationCard: FC<{
 
     return (
         <Link
-            className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl"
+            className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl relative"
             to={'/app/' + application.app_id}
         >
-            <div className="flex items-center">
-                {/* <div className="w-full flex-grow aspect-video object-cover object-top shadow-lg rounded-md bg-neutral-700 flex items-center justify-center"> */}
+            <div className="flex items-center px-2">
                 {(application['preview_url'] && previewImage && (
+                    <img
+                        src={
+                            environment.API_URL +
+                            application['preview_url'] +
+                            '/root'
+                        }
+                        alt="website preview"
+                        className="w-full h-full absolute object-cover left-0 right-0 top-0 bottom-0 z-10 hover:opacity-100 opacity-0"
+                        onError={() => {
+                            setPreviewImage(false);
+                        }}
+                    />
+                )) || <></>}
+                {/* <div className="w-full flex-grow aspect-video object-cover object-top shadow-lg rounded-md bg-neutral-700 flex items-center justify-center"> */}
+                <div>
+                    <CheckCircle />
+                </div>
+                {/* {(application['preview_url'] && previewImage && (
                     <img
                         src={
                             environment.API_URL +
@@ -39,7 +56,7 @@ const ApplicationCard: FC<{
                         </span>
                         <span>Preview</span>
                     </div>
-                )}
+                )} */}
                 <div className="ml-4 h-full">
                     <h2 className="text-lg font-bold">{application.name}</h2>
                     <p className="text-sm opacity-50">
