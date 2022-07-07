@@ -14,7 +14,7 @@ const ApplicationCard: FC<{
 
     return (
         <Link
-            className="card p-2 bg-black-800 border border-neutral-700 shadow-lg hover:shadow-xl hover:brightness-125"
+            className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl"
             to={'/app/' + application.app_id}
         >
             <div className="flex items-center">
@@ -33,7 +33,7 @@ const ApplicationCard: FC<{
                         }}
                     />
                 )) || (
-                    <div className="brightness-75 font-bold flex flex-col items-center justify-center bg-neutral-700 rounded-md aspect-video w-32">
+                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 rounded-md aspect-video w-32">
                         <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
                             No Render
                         </span>

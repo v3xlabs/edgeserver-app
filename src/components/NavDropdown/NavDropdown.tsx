@@ -26,12 +26,12 @@ export const NavDropdown: FC<{
                     onChange(v);
                 }}
             >
-                <Listbox.Button className="flex items-center w-fit h-full border-r border-neutral-700 pl-4 pr-4 cursor-pointer hover:bg-neutral-800">
+                <Listbox.Button className="flex items-center w-fit h-full border-r border-neutral-300 dark:border-neutral-700 pl-4 pr-4 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800">
                     {list[selectedEntry].label}
                 </Listbox.Button>
                 <Listbox.Options
                     className={
-                        'absolute top-full w-fit left-0 min-w-full border border-neutral-700 max-h-96 overflow-y-auto'
+                        'absolute top-full w-fit left-0 min-w-full border border-neutral-300 dark:border-neutral-700 max-h-96 overflow-y-auto'
                     }
                 >
                     {list.map((entry) => (
@@ -47,8 +47,8 @@ export const NavDropdown: FC<{
                                     className={cx(
                                         'w-auto h-16 flex items-center cursor-pointer',
                                         selected || active
-                                            ? 'bg-neutral-800'
-                                            : 'bg-black-800'
+                                            ? 'bg-neutral-200 dark:bg-neutral-800'
+                                            : 'bg-neutral-50 dark:bg-black-800'
                                     )}
                                 >
                                     <div className="px-4 py-2 min-w-full whitespace-nowrap block">

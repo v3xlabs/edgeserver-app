@@ -14,7 +14,7 @@ import { Home } from './pages';
 
 export const App: FC = () => {
     return (
-        <div className="w-full max-w-full min-h-screen">
+        <div className="w-full max-w-full min-h-screen bg-neutral-50 dark:bg-black-900">
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
