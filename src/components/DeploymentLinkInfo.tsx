@@ -57,12 +57,15 @@ export const DeploymentLinkInfo: FC<{
     if (context.contextType === 'github-action') {
         return (
             <div className="flex-1">
-                <h3>{context.data.commit.message} </h3>
+                <h3>
+                    {context.data?.commit?.message ||
+                        'Error Loading Github Context'}
+                </h3>
 
                 <p className="text-sm text-neutral-300">{context.data.actor}</p>
 
                 <a
-                    href={context.data.commit.url}
+                    href={context.data?.commit?.url || '#'}
                     className="text-xs text-neutral-400 hover:text-neutral-500"
                     onClick={(event_) => {
                         event_.preventDefault();
