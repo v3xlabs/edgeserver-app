@@ -120,10 +120,10 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
         } = {
             permissions: permissions.toString(),
             name: data.name,
-            expiresIn: (data.permanent && data.expiresIn) || '',
+            expiresIn: (!data.permanent && data.expiresIn) || '',
         };
 
-        if (!data.permanent) delete formData['expiresIn'];
+        if (data.permanent) delete formData['expiresIn'];
 
         const payload = {
             action: 'CREATE_KEY',
