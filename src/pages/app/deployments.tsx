@@ -1,13 +1,17 @@
 import { DeploymentLinkInfo } from '@components/DeploymentLinkInfo';
+import { NoDeployments } from '@components/NoDeployments/NoDeployments';
 import { environment } from '@utils/enviroment';
 import { useApp } from '@utils/queries/useApp';
 import { useDeployments } from '@utils/queries/useDeployments';
 import { formatDistance, isValid } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
+import { Activity } from 'react-feather';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Deployment } from 'src/types/Deployment';
 import { decode } from 'sunflake';
+
+const PAGE_MAX = 4;
 
 const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     deployment,
@@ -28,7 +32,7 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     return (
         <Link
             key={app_id}
-            className="p-4 border-2 card flex hover:bg-black-700"
+            className="p-4 border border-neutral-700 card flex hover:bg-black-700"
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
             <div className="flex mr-4">
@@ -61,34 +65,50 @@ const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
 
 const DeploymentList: FC = () => {
     const app = useApp();
-    const { data, isLoading, isSuccess } = useDeployments(app.app_id);
-    const sorted_deployments = useMemo(() => {
-        if (!isSuccess) return [];
-
-        if (!data) return [];
-
-        return [...data].sort((a, b) => {
-            if (BigInt(a.deploy_id) < BigInt(b.deploy_id)) return 1;
-
-            // ids will never be equal to each other
-            return -1;
-        });
-    }, [data, isSuccess]);
+    const { deployments, total, loading, loadingMore, fetchMoar } =
+        useDeployments(app.app_id, PAGE_MAX);
 
     return (
         <div className="gap-4 flex flex-col w-full">
             <h2 className="text-2xl">
-                Deployments {data && data.length > 0 ? `(${data.length})` : ''}
+                Deployments{' '}
+                {total > 0 ? `(${deployments.length} / ${total})` : ''}
             </h2>
-            {isLoading && <p>Loading Deployments...</p>}
-            {sorted_deployments &&
-                sorted_deployments.map((deployments) => (
-                    <DeploymentLink
-                        deployment={deployments}
-                        app_id={app.app_id}
-                        key={deployments.deploy_id}
+            {loading &&
+                Array.from({ length: 4 }).map((_, index) => (
+                    <div
+                        className="p-4 border border-neutral-700 bg-neutral-700 card flex h-32 animate-pulse"
+                        key={index}
                     />
                 ))}
+            {!loading && (
+                <>
+                    {deployments &&
+                        deployments.map((_deployments) => (
+                            <DeploymentLink
+                                deployment={_deployments}
+                                app_id={app.app_id}
+                                key={_deployments.deploy_id}
+                            />
+                        ))}
+                    {total != deployments.length && (
+                        <button
+                            className="bg-blue-500 p-4 text-white"
+                            onClick={() => {
+                                fetchMoar();
+                            }}
+                        >
+                            {loadingMore ? 'Loading...' : 'Load Moar'}
+                        </button>
+                    )}
+                    {total == deployments.length && total > 0 && (
+                        <div className="flex justify-center p-4 gap-2">
+                            This is where it all began! <Activity />
+                        </div>
+                    )}
+                    {total == 0 && <NoDeployments app_id={app.app_id} />}
+                </>
+            )}
         </div>
     );
 };
