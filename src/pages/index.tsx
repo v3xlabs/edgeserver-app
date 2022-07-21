@@ -17,8 +17,8 @@ const ApplicationCard: FC<{
             className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl relative"
             to={'/app/' + application.app_id}
         >
-            <div className="flex items-center px-2">
-                {(application['preview_url'] && previewImage && (
+            {(application['preview_url'] && previewImage && (
+                <div className="">
                     <img
                         src={
                             environment.API_URL +
@@ -26,16 +26,27 @@ const ApplicationCard: FC<{
                             '/root'
                         }
                         alt="website preview"
-                        className="w-full h-full absolute object-cover left-0 right-0 top-0 bottom-0 z-10 hover:opacity-100 opacity-0"
+                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 rounded-lg"
                         onError={() => {
                             setPreviewImage(false);
                         }}
                     />
-                )) || <></>}
-                {/* <div className="w-full flex-grow aspect-video object-cover object-top shadow-lg rounded-md bg-neutral-700 flex items-center justify-center"> */}
-                <div>
-                    <CheckCircle />
                 </div>
+            )) || (
+                <div className="w-full aspect-video">
+                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 w-full h-full rounded-lg">
+                        <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
+                            No Render
+                        </span>
+                        <span>Preview</span>
+                    </div>
+                </div>
+            )}
+            <div className="flex items-center px-2 pt-2 gap-4">
+                {/* <div className="w-full flex-grow aspect-video object-cover object-top shadow-lg rounded-md bg-neutral-700 flex items-center justify-center"> */}
+                {/* <div>
+                    <CheckCircle />
+                </div> */}
                 {/* {(application['preview_url'] && previewImage && (
                     <img
                         src={
@@ -57,7 +68,7 @@ const ApplicationCard: FC<{
                         <span>Preview</span>
                     </div>
                 )} */}
-                <div className="ml-4 h-full">
+                <div className="h-full">
                     <h2 className="text-lg font-bold">{application.name}</h2>
                     <p className="text-sm opacity-50">
                         {application.domain_id || 'No Domain Assigned'}
