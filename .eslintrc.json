@@ -17,11 +17,12 @@
         }
     },
     "globals": {
-        "JSX":"readonly"
+        "JSX": "readonly"
     },
     "rules": {
         "react/react-in-jsx-scope": "off",
         "node/no-process-env": "error",
-        "unicorn/no-nested-ternary": "off"
+        "unicorn/no-nested-ternary": "off",
+        "unused-imports/no-unused-vars": "off"
     }
 }
