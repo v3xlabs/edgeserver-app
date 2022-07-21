@@ -1,3 +1,4 @@
+import { LoadingApp } from '@components/LoadingApp/LoadingApp';
 import { useAppByID } from '@utils/queries/useAppByID';
 import { FC } from 'react';
 import { Helmet } from 'react-helmet';
@@ -8,6 +9,8 @@ export const AppContainer: FC = () => {
     const app = useAppByID(app_id);
 
     if (!app_id) return <></>;
+
+    if (app?.isLoading) return <LoadingApp />;
 
     if (!app?.isSuccess) return <>No App</>;
 
