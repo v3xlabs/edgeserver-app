@@ -13,7 +13,7 @@ import { decode } from 'sunflake';
 
 const PAGE_MAX = 4;
 
-const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
+export const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     deployment,
     app_id,
 }) => {
