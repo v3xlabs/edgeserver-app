@@ -64,7 +64,7 @@ export const LoginStepTwo: FC = () => {
     if (!Wallet || !isSuccess) return <>Error Auth Data</>;
 
     return (
-        <div className="p-8 card w-full max-w-xl flex flex-col gap-4">
+        <div className="p-8 card logincard w-full max-w-xl flex flex-col gap-4">
             <h2 className="text-lg mb-4">Step two</h2>
             <div className="flex items-center gap-4 flex-wrap">
                 <div className="w-16 h-16 flex-shrink-0 rounded-full bg-neutral-700">

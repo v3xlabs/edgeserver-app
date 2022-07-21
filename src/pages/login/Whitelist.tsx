@@ -17,7 +17,7 @@ export const Whitelist: FC = () => {
     if (!Wallet || !isSuccess || !Wallet.address) return <>Error Auth Data</>;
 
     return (
-        <div className="p-8 card w-full max-w-xl flex flex-col gap-6">
+        <div className="p-8 card logincard w-full max-w-xl flex flex-col gap-6">
             <div className="flex items-center gap-4">
                 <img
                     src={whitelist}

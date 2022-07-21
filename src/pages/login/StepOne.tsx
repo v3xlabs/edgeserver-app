@@ -1,10 +1,17 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { FC } from 'react';
 
+import logo from '../../../assets/logo.svg';
+
 export const LoginStepOne: FC = () => {
     // https://www.rainbowkit.com/docs/custom-connect-button
     return (
-        <div className="p-8 card w-full max-w-lg m-4">
+        <div className="p-8 card logincard w-full max-w-lg m-4 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-4">
+                <img src={logo} alt="" className="w-24" />
+                <h1 className="text-2xl">EDGESERVER.io</h1>
+            </div>
+            <div className="w-64 h-64 bg-neutral-700 rounded-lg" />
             <ConnectButton.Custom>
                 {/* { chain } */}
                 {({ openConnectModal }) => {
@@ -23,6 +30,10 @@ export const LoginStepOne: FC = () => {
                     );
                 }}
             </ConnectButton.Custom>
+            <div>
+                <a href="https://github.com/lvkdotsh">LVKDOTSH</a> /{' '}
+                <a href="https://github.com/lvkdotsh/edgeserver-app">Github</a>
+            </div>
         </div>
     );
 };
