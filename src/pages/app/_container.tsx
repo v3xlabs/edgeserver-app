@@ -14,7 +14,7 @@ export const AppContainer: FC = () => {
     return (
         <>
             <Helmet>
-                <title>{app.data.name} / EdgeServer</title>
+                <title>{app?.data?.name} / EdgeServer</title>
             </Helmet>
             <Outlet context={{ app: app.data }} />
         </>

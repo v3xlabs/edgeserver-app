@@ -3,6 +3,7 @@ import { CreateAppModal } from '@components/CreateAppModal/CreateAppModal';
 import { environment } from '@utils/enviroment';
 import { useApps } from '@utils/queries/useApps';
 import { FC, useState } from 'react';
+import { GitHub } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { Application } from 'src/types/Application';
 
@@ -12,28 +13,47 @@ const ApplicationCard: FC<{
     const [previewImage, setPreviewImage] = useState(true);
 
     return (
-        <Link className="card p-2" to={'/app/' + application.app_id}>
-            <div className="w-full flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center">
-                {(application['preview_url'] && previewImage && (
+        <Link
+            className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl relative"
+            to={'/app/' + application.app_id}
+        >
+            {(application['preview_url'] && previewImage && (
+                <div className="">
                     <img
                         src={
                             environment.API_URL +
                             application['preview_url'] +
-                            '/256'
+                            '/root'
                         }
                         alt="website preview"
-                        className="w-full aspect-video object-cover object-top border rounded-md"
+                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 rounded-lg"
                         onError={() => {
                             setPreviewImage(false);
                         }}
                     />
-                )) || <div className="brightness-75 font-bold">?</div>}
+                </div>
+            )) || (
+                <div className="w-full aspect-video">
+                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 w-full h-full rounded-lg">
+                        <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
+                            No Render
+                        </span>
+                        <span>Preview</span>
+                    </div>
+                </div>
+            )}
+            <div className="flex items-center px-2 pt-2 gap-4">
+                <div className="h-full">
+                    <h2 className="text-lg font-bold">{application.name}</h2>
+                    <p className="text-sm opacity-50">
+                        {application.domain_id || 'No Domain Assigned'}
+                    </p>
+                </div>
             </div>
-            <div className="mt-4">
-                <h2 className="text-lg font-bold pb-2">{application.name}</h2>
-                <p className="text-sm">
-                    {application.domain_id || 'No Domain Assigned'}
-                </p>
+
+            <div className="flex items-center pt-2 px-1 justify-end gap-2">
+                <p className="opacity-50 w-fit">a minute ago</p>
+                <GitHub size={'1em'} opacity={0.5} />
             </div>
         </Link>
     );
@@ -67,7 +87,7 @@ const AppsList: FC = () => {
             </div>
             {isLoading && <p>Loading Applications...</p>}
             {data && isSuccess && (
-                <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-3">
+                <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     {data.map((project) => (
                         <ApplicationCard
                             key={project.app_id}
