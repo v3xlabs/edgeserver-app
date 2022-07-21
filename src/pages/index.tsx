@@ -3,7 +3,7 @@ import { CreateAppModal } from '@components/CreateAppModal/CreateAppModal';
 import { environment } from '@utils/enviroment';
 import { useApps } from '@utils/queries/useApps';
 import { FC, useState } from 'react';
-import { CheckCircle, GitHub } from 'react-feather';
+import { GitHub } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { Application } from 'src/types/Application';
 
@@ -43,31 +43,6 @@ const ApplicationCard: FC<{
                 </div>
             )}
             <div className="flex items-center px-2 pt-2 gap-4">
-                {/* <div className="w-full flex-grow aspect-video object-cover object-top shadow-lg rounded-md bg-neutral-700 flex items-center justify-center"> */}
-                {/* <div>
-                    <CheckCircle />
-                </div> */}
-                {/* {(application['preview_url'] && previewImage && (
-                    <img
-                        src={
-                            environment.API_URL +
-                            application['preview_url'] +
-                            '/256'
-                        }
-                        alt="website preview"
-                        className="w-32 aspect-video object-cover object-top rounded-md border border-neutral-700"
-                        onError={() => {
-                            setPreviewImage(false);
-                        }}
-                    />
-                )) || (
-                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 rounded-md aspect-video w-32">
-                        <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
-                            No Render
-                        </span>
-                        <span>Preview</span>
-                    </div>
-                )} */}
                 <div className="h-full">
                     <h2 className="text-lg font-bold">{application.name}</h2>
                     <p className="text-sm opacity-50">
