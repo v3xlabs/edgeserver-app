@@ -55,7 +55,7 @@ export const Setup: FC = () => {
     });
 
     return (
-        <div className="p-8 card w-full max-w-xl flex flex-col gap-6">
+        <div className="p-8 card logincard w-full max-w-xl flex flex-col gap-6">
             <div className="flex items-center gap-4">
                 <img src={gear} className="w-16 h-16" alt="setup icon" />
                 <h2 className="text-2xl font-bold">Setup EdgeServer</h2>
