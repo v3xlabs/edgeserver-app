@@ -11,7 +11,9 @@ export const LoginStepOne: FC = () => {
                 <img src={logo} alt="" className="w-24" />
                 <h1 className="text-2xl">EDGESERVER.io</h1>
             </div>
-            <div className="w-64 h-64 bg-neutral-700 rounded-lg" />
+            <div className="w-full h-64 bg-neutral-200 dark:bg-neutral-700 rounded-lg p-6">
+                Hi there this box is placeholder
+            </div>
             <ConnectButton.Custom>
                 {/* { chain } */}
                 {({ openConnectModal }) => {
