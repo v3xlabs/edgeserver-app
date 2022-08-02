@@ -7,6 +7,12 @@ import { GitHub } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { Application } from 'src/types/Application';
 
+const ApplicationShadowCard: FC = () => {
+    return (
+        <div className="card p-2 h-64 bg-neutral-300 dark:bg-neutral-700 shadow-lg animate-pulse" />
+    );
+};
+
 const ApplicationCard: FC<{
     application: Application & { preview_url?: string };
 }> = ({ application }) => {
@@ -85,17 +91,21 @@ const AppsList: FC = () => {
                     />
                 )}
             </div>
-            {isLoading && <p>Loading Applications...</p>}
-            {data && isSuccess && (
-                <div className="flex flex-wrap gap-4 grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {data.map((project) => (
+            <div className="gap-4 grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                {data &&
+                    isSuccess &&
+                    data.map((project) => (
                         <ApplicationCard
                             key={project.app_id}
                             application={project}
                         />
                     ))}
-                </div>
-            )}
+                {!data &&
+                    isLoading &&
+                    Array.from({ length: 4 }).map((_, index) => (
+                        <ApplicationShadowCard key={index} />
+                    ))}
+            </div>
         </div>
     );
 };

@@ -129,9 +129,9 @@ export const Navbar: FC = () => {
                         </div>
                     </div> */}
                 </div>
-                <div>
-                    <UserProfile />
-                </div>
+                {/* <div> */}
+                <UserProfile />
+                {/* </div> */}
             </div>
             {/* <div className="sticky top-0 left-0 right-0 w-full flex h-16 items-end bg-black-900 border-b-2 border-neutral-700">
                 <div className="flex justify-between containerd">
