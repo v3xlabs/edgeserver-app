@@ -1,13 +1,16 @@
 import { Listbox } from '@headlessui/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { cx } from '@utils/cx';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
 import { useENS } from '@utils/queries/useENS';
 import { FC } from 'react';
-import { useAccount, useConnect } from 'wagmi';
+import { NavLink } from 'react-router-dom';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
 export const UserProfile: FC = () => {
     const { data: userData, isSuccess } = useAccount();
+    const { disconnect } = useDisconnect({});
 
     const { activeConnector } = useConnect();
 
@@ -65,16 +68,40 @@ export const UserProfile: FC = () => {
                     }}
                 </ConnectButton.Custom>
             </Listbox.Button>
-            <Listbox.Options as="div" className="bg-neutral-700 border">
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <Listbox.Option
-                        value="1"
-                        className="list-none p-4"
-                        key={index}
-                    >
-                        <div>Menuitem</div>
+            <Listbox.Options
+                as="div"
+                className="bg-neutral-800 border border-neutral-700"
+            >
+                {[
+                    { link: '/settings', label: 'Settings' },
+                    { link: '/keys', label: 'Auth Keys', icon: '🔑' },
+                ].map((link, index) => (
+                    <Listbox.Option value="1" className="list-none" key={index}>
+                        <NavLink
+                            to={link.link}
+                            className={({ isActive }) =>
+                                cx(
+                                    'p-2 w-full block',
+                                    (isActive &&
+                                        'border-l-4 border-blue-500') ||
+                                        'hover:bg-neutral-700'
+                                )
+                            }
+                        >
+                            {link.label}
+                        </NavLink>
                     </Listbox.Option>
                 ))}
+                <Listbox.Option value="1" className="list-none">
+                    <button
+                        className={
+                            'p-2 w-full block bg-red-500 hover:bg-red-800'
+                        }
+                        onClick={() => disconnect()}
+                    >
+                        Logout
+                    </button>
+                </Listbox.Option>
             </Listbox.Options>
         </Listbox>
     );
