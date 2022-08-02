@@ -19,7 +19,12 @@ export const UserProfile: FC = () => {
     if (!isSuccess || !userData || !userData.address) return <></>;
 
     return (
-        <Listbox value="1" onChange={() => {}} as="div" className="yess">
+        <Listbox
+            value="1"
+            onChange={() => {}}
+            as="div"
+            className="border-l border-l-neutral-700"
+        >
             <Listbox.Button as="div" className="h-full">
                 <ConnectButton.Custom>
                     {({ openAccountModal }) => {
