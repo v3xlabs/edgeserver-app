@@ -136,3 +136,11 @@ pre {
 .logincard {
     @apply border dark:border-neutral-700;
 }
+
+.navtext {
+    @apply py-1;
+}
+
+.navlink-active div .navtext {
+    @apply border-b-2 border-b-blue-500;
+}

@@ -1,9 +1,9 @@
-import { NavDropdown } from '@components/NavDropdown/NavDropdown';
+import { cx } from '@utils/cx';
 import { useAppByID } from '@utils/queries/useAppByID';
 import { useApps } from '@utils/queries/useApps';
 import { useAuth } from '@utils/useAuth';
 import { FC, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import logo from '../../../assets/logo.svg';
 import { UserProfile } from './UserProfile';
@@ -70,7 +70,27 @@ export const Navbar: FC = () => {
                             Edgeserver
                         </div>
                     </Link>
-                    <NavDropdown
+
+                    {[
+                        ['Apps', '/'],
+                        ['Domains', '/domains'],
+                    ].map((entry, index) => (
+                        <NavLink
+                            to={entry.at(1) || '/'}
+                            className={({ isActive }) =>
+                                cx(
+                                    'h-full block relative',
+                                    (isActive && 'navlink-active') || ''
+                                )
+                            }
+                            key={index}
+                        >
+                            <div className="flex items-center w-fit h-full border-r border-neutral-300 dark:border-neutral-700 pl-4 pr-4 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800">
+                                <div className="navtext">{entry.at(0)}</div>
+                            </div>
+                        </NavLink>
+                    ))}
+                    {/* <NavDropdown
                         list={[
                             { label: 'Dashboard', id: 0 },
                             { label: 'Apps', id: 1 },
@@ -101,7 +121,7 @@ export const Navbar: FC = () => {
                             active={0}
                             onChange={() => {}}
                         />
-                    )}
+                    )} */}
                     {/* <div
                     className="w-full max-w-4xl mx-auto
                     flex flex-col"
@@ -129,9 +149,9 @@ export const Navbar: FC = () => {
                         </div>
                     </div> */}
                 </div>
-                <div>
-                    <UserProfile />
-                </div>
+                {/* <div> */}
+                <UserProfile />
+                {/* </div> */}
             </div>
             {/* <div className="sticky top-0 left-0 right-0 w-full flex h-16 items-end bg-black-900 border-b-2 border-neutral-700">
                 <div className="flex justify-between containerd">
