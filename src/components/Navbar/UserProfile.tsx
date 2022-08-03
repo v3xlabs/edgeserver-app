@@ -78,7 +78,7 @@ export const UserProfile: FC = () => {
                 className="bg-neutral-50 dark:bg-black-800 border border-neutral-700"
             >
                 {[
-                    { link: '/settings', label: 'Settings' },
+                    { link: '/settings', label: 'Settings', icon: '⚙️' },
                     { link: '/keys', label: 'Auth Keys', icon: '🔑' },
                 ].map((link, index) => (
                     <Listbox.Option value="1" className="list-none" key={index}>
