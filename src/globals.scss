@@ -144,3 +144,11 @@ pre {
 .navlink-active div .navtext {
     @apply border-b-2 border-b-blue-500;
 }
+
+button:hover .leavebtn::before {
+    content: "🚶";
+}
+
+.leavebtn::before {
+    content: "🚪";
+}

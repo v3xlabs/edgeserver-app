@@ -23,14 +23,14 @@ export const UserProfile: FC = () => {
             value="1"
             onChange={() => {}}
             as="div"
-            className="border-l border-l-neutral-700"
+            className="border-l min-w-fit w-64 dark:border-neutral-700 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
         >
             <Listbox.Button as="div" className="h-full">
                 <ConnectButton.Custom>
                     {({ openAccountModal }) => {
                         return (
                             <button
-                                className="flex items-center h-full pr-4 pl-4 gap-2"
+                                className="flex items-center justify-end h-full pr-4 pl-4 gap-2 w-full"
                                 // onClick={openAccountModal}
                             >
                                 <div className="">
@@ -75,7 +75,7 @@ export const UserProfile: FC = () => {
             </Listbox.Button>
             <Listbox.Options
                 as="div"
-                className="bg-neutral-800 border border-neutral-700"
+                className="bg-neutral-50 dark:bg-black-800 border border-neutral-700"
             >
                 {[
                     { link: '/settings', label: 'Settings' },
@@ -86,13 +86,16 @@ export const UserProfile: FC = () => {
                             to={link.link}
                             className={({ isActive }) =>
                                 cx(
-                                    'p-2 w-full block',
+                                    'p-2 pl-4 py-4 w-full block hover:bg-neutral-100 dark:hover:bg-neutral-800',
                                     (isActive &&
                                         'border-l-4 border-blue-500') ||
-                                        'hover:bg-neutral-700'
+                                        ''
                                 )
                             }
                         >
+                            <span className="w-6 min-h-fit h-2 inline-flex justify-end">
+                                {link.icon}
+                            </span>{' '}
                             {link.label}
                         </NavLink>
                     </Listbox.Option>
@@ -100,10 +103,13 @@ export const UserProfile: FC = () => {
                 <Listbox.Option value="1" className="list-none">
                     <button
                         className={
-                            'p-2 w-full block bg-red-500 hover:bg-red-800'
+                            'p-2 pl-4 py-4 w-full block text-start bg-red-500 bg-opacity-0 hover:bg-opacity-25'
                         }
                         onClick={() => disconnect()}
                     >
+                        <span className="w-6 inline-flex justify-end min-h-fit h-2">
+                            <span className="leavebtn"></span>
+                        </span>{' '}
                         Logout
                     </button>
                 </Listbox.Option>
