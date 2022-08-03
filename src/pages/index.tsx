@@ -32,7 +32,7 @@ const ApplicationCard: FC<{
                             '/root'
                         }
                         alt="website preview"
-                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 rounded-lg"
+                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 rounded-lg border border-neutral-800"
                         onError={() => {
                             setPreviewImage(false);
                         }}
