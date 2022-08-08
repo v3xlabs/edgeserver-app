@@ -147,6 +147,11 @@ const AppsList: FC = () => {
 };
 
 export const Home: FC = () => {
+    document
+        .querySelector('#favicon')
+        // @ts-ignore
+        ?.setAttribute('href', window.OG_FAVICON || '');
+
     return (
         <div className="containerd pt-8">
             <AppsList />

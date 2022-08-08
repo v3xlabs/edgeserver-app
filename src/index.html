@@ -10,7 +10,7 @@
             href="../node_modules/@rainbow-me/rainbowkit/dist/index.css"
         />
         <title>Signal Edge</title>
-        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" id="favicon" href="../assets/favicon.svg" type="image/svg+xml" sizes="any" />
     </head>
 
     <body>
@@ -28,6 +28,8 @@
             } else {
                 document.body.classList.remove('dark');
             }
+
+            window.OG_FAVICON = document.getElementById('favicon').getAttribute('href');
         </script>
     </body>
 </html>
