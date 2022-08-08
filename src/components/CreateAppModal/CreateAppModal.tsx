@@ -145,7 +145,7 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                             className={cx(
                                 'text-sm rounded-lg block w-full p-2.5 border',
                                 errors.domain
-                                    ? 'bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
+                                    ? 'bg-red-500 dark:bg-red-900 bg-opacity-20 border-red-500 focus-visible:outine-red-500'
                                     : 'focus:ring-blue-500 focus:border-blue-500 bg-neutral-50 border-neutral-300 dark:bg-neutral-600 dark:border-neutral-500 dark:placeholder-neutral-400 dark:text-white'
                             )}
                             placeholder="edgeserver.app"
@@ -158,7 +158,7 @@ export const CreateAppModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                     <p className="block text-sm font-medium text-neutral-900 dark:text-neutral-300 mb-2">
                         And update your DNS records to include
                     </p>
-                    <code className="p-2 bg-black-500 w-full block mt-2">
+                    <code className="p-2 bg-neutral-200 dark:bg-black-500 w-full block mt-2">
                         {(watch('domain') || 'yoursite.here') +
                             ' CNAME web.lvk.sh'}
                     </code>

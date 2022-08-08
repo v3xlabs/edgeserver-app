@@ -6,8 +6,9 @@ type Variants = 'primary' | 'delete' | 'disabled' | 'add';
 
 const styles: Record<Variants, string> = {
     primary:
-        'bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white focus:ring-blue-300',
-    disabled: 'bg-neutral-700 text-neutral-400 text-white',
+        'bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-white focus:ring-blue-300',
+    disabled:
+        'cursor-not-allowed bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-400 dark:text-white',
     delete: 'bg-red-700 hover:bg-red-800 text-white focus:ring-red-300',
     add: 'bg-green-700 hover:bg-green-800 text-white focus:ring-green-300',
 };
