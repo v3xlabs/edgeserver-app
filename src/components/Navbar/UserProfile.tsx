@@ -4,6 +4,7 @@ import { cx } from '@utils/cx';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
 import { useENS } from '@utils/queries/useENS';
+import { toggleTheme } from '@utils/useTheme';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
@@ -23,7 +24,7 @@ export const UserProfile: FC = () => {
             value="1"
             onChange={() => {}}
             as="div"
-            className="border-l min-w-fit w-64 dark:border-neutral-700 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="border-l min-w-fit w-64 border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
         >
             <Listbox.Button as="div" className="h-full">
                 <ConnectButton.Custom>
@@ -75,7 +76,12 @@ export const UserProfile: FC = () => {
             </Listbox.Button>
             <Listbox.Options
                 as="div"
-                className="bg-neutral-50 dark:bg-black-800 border border-neutral-700"
+                className="bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700"
+                style={{
+                    marginLeft: '-1px',
+                    paddingRight: '1px',
+                    marginRight: '-1px',
+                }}
             >
                 {[
                     { link: '/settings', label: 'Settings', icon: '⚙️' },
@@ -86,7 +92,7 @@ export const UserProfile: FC = () => {
                             to={link.link}
                             className={({ isActive }) =>
                                 cx(
-                                    'p-2 pl-4 py-4 w-full block hover:bg-neutral-100 dark:hover:bg-neutral-800',
+                                    'p-2 pl-4 py-4 w-full block text-start hover:bg-neutral-100 dark:hover:bg-neutral-800',
                                     (isActive &&
                                         'border-l-4 border-blue-500') ||
                                         ''
@@ -100,6 +106,21 @@ export const UserProfile: FC = () => {
                         </NavLink>
                     </Listbox.Option>
                 ))}
+                <Listbox.Option value="1" className="list-none">
+                    <button
+                        className={
+                            'p-2 pl-4 py-4 w-full block text-start hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                        }
+                        onClick={() => {
+                            toggleTheme();
+                        }}
+                    >
+                        <span className="w-6 inline-flex justify-end min-h-fit h-2">
+                            <span className="themebtn"></span>
+                        </span>{' '}
+                        Change Theme
+                    </button>
+                </Listbox.Option>
                 <Listbox.Option value="1" className="list-none">
                     <button
                         className={

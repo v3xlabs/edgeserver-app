@@ -48,7 +48,7 @@ const ApplicationCard: FC<{
                             '/root'
                         }
                         alt="website preview"
-                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 border border-neutral-800"
+                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 border-b border-neutral-300 dark:border-neutral-700"
                         onError={() => {
                             setPreviewImage(false);
                         }}
@@ -56,7 +56,7 @@ const ApplicationCard: FC<{
                 </div>
             )) || (
                 <div className="w-full aspect-video">
-                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 w-full h-full">
+                    <div className="font-bold flex flex-col items-center justify-center border-b border-neutral-300 dark:bg-neutral-800 dark:border-neutral-700 w-full h-full">
                         <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
                             No Render
                         </span>
