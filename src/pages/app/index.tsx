@@ -1,4 +1,6 @@
 import { Button } from '@components/Button';
+import { NoDeployments } from '@components/NoDeployments/NoDeployments';
+import { Tab, Tabs } from '@components/Tabs/Tabs';
 import { useApp } from '@utils/queries/useApp';
 import { ApplicationListData } from '@utils/queries/useApps';
 import { useDeployments } from '@utils/queries/useDeployments';
@@ -30,15 +32,25 @@ export const AppPage: FC = () => {
             <div className="flex">
                 <h2 className="text-2xl flex-grow block">{app.name}</h2>
             </div>
-            <p>
-                Please ignore the following debug information <br />
-                App ID: {app.app_id}
-                <br />
-                Owner: {app.owner_id}
-                <br />
-                Domain: {app.domain_id}
-            </p>
-            <AppDeploymentList app={app} />
+            <Tabs
+                labels={['⚙️ Setup', '🔎 Information', '🐛 Debug']}
+                defaultTab={app.last_deploy ? 1 : 0}
+            >
+                <Tab>
+                    <NoDeployments app_id={app.app_id} />
+                </Tab>
+                <Tab>Welcome to your Application</Tab>
+                <Tab>
+                    Please ignore the following debug information <br />
+                    App ID: {app.app_id}
+                    <br />
+                    Owner: {app.owner_id}
+                    <br />
+                    Domain: {app.domain_id}
+                </Tab>
+            </Tabs>
+
+            {app.last_deploy && <AppDeploymentList app={app} />}
         </div>
     );
 };

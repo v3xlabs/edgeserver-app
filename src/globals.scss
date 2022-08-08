@@ -164,3 +164,7 @@ body.dark .themebtn::before {
 .skeleton {
     @apply bg-neutral-300 dark:bg-neutral-700 animate-pulse;
 }
+
+.tab .tabtext {
+    @apply border-b-2 border-b-blue-500;
+}
