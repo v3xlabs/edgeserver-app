@@ -1,17 +1,33 @@
 import { Button } from '@components/Button';
 import { useApp } from '@utils/queries/useApp';
+import { ApplicationListData } from '@utils/queries/useApps';
 import { useDeployments } from '@utils/queries/useDeployments';
-import { FC } from 'react';
+import Head from 'next/head';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Application } from 'src/types/Application';
 
 import { DeploymentLink } from './deployments';
 
 export const AppPage: FC = () => {
     const app = useApp();
 
+    if (app.favicon_url)
+        document
+            .querySelector('#favicon')
+            ?.setAttribute('href', app.favicon_url);
+
+    useEffect(() => {
+        return () => {
+            document
+                .querySelector('#favicon')
+                // @ts-ignore
+                ?.setAttribute('href', window.OG_FAVICON);
+        };
+    }, [0]);
+
     return (
         <div className="containerd pt-8 flex flex-col gap-4">
+            <link rel="shortcut icon" href={app.favicon_url} />
             <div className="flex">
                 <h2 className="text-2xl flex-grow block">{app.name}</h2>
             </div>
@@ -28,7 +44,7 @@ export const AppPage: FC = () => {
     );
 };
 
-const AppDeploymentList: FC<{ app: Application }> = ({ app }) => {
+const AppDeploymentList: FC<{ app: ApplicationListData }> = ({ app }) => {
     const { deployments, error, loading } = useDeployments(app.app_id, 3);
 
     return (

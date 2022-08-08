@@ -1,8 +1,9 @@
 import { useOutletContext } from 'react-router';
-import { Application } from 'src/types/Application';
+
+import { ApplicationListData } from './useApps';
 
 export const useApp = () => {
-    const context = useOutletContext() as { app: Application };
+    const context = useOutletContext() as { app: ApplicationListData };
 
     return context.app;
 };
