@@ -24,7 +24,7 @@ export const UserProfile: FC = () => {
             value="1"
             onChange={() => {}}
             as="div"
-            className="border-l min-w-fit w-64 dark:border-neutral-700 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="border-l min-w-fit w-64 border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
         >
             <Listbox.Button as="div" className="h-full">
                 <ConnectButton.Custom>
@@ -76,7 +76,12 @@ export const UserProfile: FC = () => {
             </Listbox.Button>
             <Listbox.Options
                 as="div"
-                className="bg-neutral-50 dark:bg-black-800 border border-neutral-700"
+                className="bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700"
+                style={{
+                    marginLeft: '-1px',
+                    paddingRight: '1px',
+                    marginRight: '-1px',
+                }}
             >
                 {[
                     { link: '/settings', label: 'Settings', icon: '⚙️' },
