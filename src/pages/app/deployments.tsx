@@ -32,33 +32,33 @@ export const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     return (
         <Link
             key={app_id}
-            className="p-4 border border-neutral-700 card flex hover:bg-black-700"
+            className="border border-neutral-700 card hover:bg-black-700 flex items-stretch gap-4"
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
-            <div className="flex mr-4">
-                <div className="w-32 flex-grow aspect-video object-cover object-top border rounded-md bg-neutral-700 flex items-center justify-center h-fit">
-                    {previewImage && (
-                        <img
-                            src={
-                                environment.API_URL +
-                                '/api/image/deploy/' +
-                                deployment.deploy_id +
-                                '/128'
-                            }
-                            className="w-32 rounded-lg"
-                            alt="Deployment Preview Render"
-                            onError={() => {
-                                setPreviewImage(false);
-                            }}
-                        />
-                    )}
-                    {!previewImage && (
-                        <div className="brightness-75 font-bold">?</div>
-                    )}
-                </div>
+            <div className="h-auto w-auto aspect-video object-cover object-top bg-neutral-700 flex items-center justify-center">
+                {previewImage && (
+                    <img
+                        src={
+                            environment.API_URL +
+                            '/api/image/deploy/' +
+                            deployment.deploy_id +
+                            '/256'
+                        }
+                        className="w-64 h-full aspect-video"
+                        alt="Deployment Preview Render"
+                        onError={() => {
+                            setPreviewImage(false);
+                        }}
+                    />
+                )}
+                {!previewImage && (
+                    <div className="brightness-75 font-bold">?</div>
+                )}
             </div>
-            <DeploymentLinkInfo deployment={deployment} />
-            <div className="text-sm text-neutral-400">{timeDistance}</div>
+            <div className="flex justify-between p-4 flex-1">
+                <DeploymentLinkInfo deployment={deployment} />
+                <div className="text-sm text-neutral-400">{timeDistance}</div>
+            </div>
         </Link>
     );
 };
