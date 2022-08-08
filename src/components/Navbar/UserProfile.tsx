@@ -4,6 +4,7 @@ import { cx } from '@utils/cx';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
 import { useENS } from '@utils/queries/useENS';
+import { toggleTheme, useTheme } from '@utils/useTheme';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
@@ -86,7 +87,7 @@ export const UserProfile: FC = () => {
                             to={link.link}
                             className={({ isActive }) =>
                                 cx(
-                                    'p-2 pl-4 py-4 w-full block hover:bg-neutral-100 dark:hover:bg-neutral-800',
+                                    'p-2 pl-4 py-4 w-full block text-start hover:bg-neutral-100 dark:hover:bg-neutral-800',
                                     (isActive &&
                                         'border-l-4 border-blue-500') ||
                                         ''
@@ -100,6 +101,21 @@ export const UserProfile: FC = () => {
                         </NavLink>
                     </Listbox.Option>
                 ))}
+                <Listbox.Option value="1" className="list-none">
+                    <button
+                        className={
+                            'p-2 pl-4 py-4 w-full block text-start hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                        }
+                        onClick={() => {
+                            toggleTheme();
+                        }}
+                    >
+                        <span className="w-6 inline-flex justify-end min-h-fit h-2">
+                            <span className="themebtn"></span>
+                        </span>{' '}
+                        Change Theme
+                    </button>
+                </Listbox.Option>
                 <Listbox.Option value="1" className="list-none">
                     <button
                         className={

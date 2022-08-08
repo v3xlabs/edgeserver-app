@@ -13,9 +13,21 @@
         <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
     </head>
 
-    <body class="dark">
+    <body>
         <div id="root"></div>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <script src="./index.tsx" type="module"></script>
+        <script>
+            /** Load Theme */
+            if (
+                localStorage.getItem('color-theme') === 'dark' ||
+                (!('color-theme' in localStorage) &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        </script>
     </body>
 </html>

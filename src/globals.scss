@@ -42,7 +42,7 @@ a {
 }
 
 .card {
-    @apply rounded-lg;
+    @apply rounded-sm;
 }
 
 .inset {
@@ -151,4 +151,12 @@ button:hover .leavebtn::before {
 
 .leavebtn::before {
     content: "🚪";
+}
+
+body .themebtn::before {
+    content: "🌞";
+}
+
+body.dark .themebtn::before {
+    content: "🌙";
 }
