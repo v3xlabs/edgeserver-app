@@ -20,7 +20,7 @@ const ApplicationCard: FC<{
 
     return (
         <Link
-            className="card p-2 bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl relative"
+            className="card overflow-hidden bg-neutral-50 dark:bg-black-800 border border-neutral-300 dark:border-neutral-700 shadow-lg hover:shadow-xl relative"
             to={'/app/' + application.app_id}
         >
             {(application['preview_url'] && previewImage && (
@@ -32,7 +32,7 @@ const ApplicationCard: FC<{
                             '/root'
                         }
                         alt="website preview"
-                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 rounded-lg border border-neutral-800"
+                        className="w-full aspect-video object-cover left-0 right-0 top-0 bottom-0 z-10 border border-neutral-800"
                         onError={() => {
                             setPreviewImage(false);
                         }}
@@ -40,7 +40,7 @@ const ApplicationCard: FC<{
                 </div>
             )) || (
                 <div className="w-full aspect-video">
-                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 w-full h-full rounded-lg">
+                    <div className="brightness-75 font-bold flex flex-col items-center justify-center border border-neutral-100 dark:border-0 dark:bg-neutral-700 w-full h-full">
                         <span className="to-pink-800 from-blue-700 brightness-200 bg-gradient-to-tl bg-clip-text text-transparent">
                             No Render
                         </span>
@@ -48,18 +48,22 @@ const ApplicationCard: FC<{
                     </div>
                 </div>
             )}
-            <div className="flex items-center px-2 pt-2 gap-4">
-                <div className="h-full">
-                    <h2 className="text-lg font-bold">{application.name}</h2>
-                    <p className="text-sm opacity-50">
-                        {application.domain_id || 'No Domain Assigned'}
-                    </p>
+            <div className="p-2">
+                <div className="flex items-center px-2 pt-2 gap-4">
+                    <div className="h-full">
+                        <h2 className="text-lg font-bold">
+                            {application.name}
+                        </h2>
+                        <p className="text-sm opacity-50">
+                            {application.domain_id || 'No Domain Assigned'}
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div className="flex items-center pt-2 px-1 justify-end gap-2">
-                <p className="opacity-50 w-fit">a minute ago</p>
-                <GitHub size={'1em'} opacity={0.5} />
+                <div className="flex items-center pt-2 px-1 justify-end gap-2">
+                    <p className="opacity-50 w-fit">a minute ago</p>
+                    <GitHub size={'1em'} opacity={0.5} />
+                </div>
             </div>
         </Link>
     );
