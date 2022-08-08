@@ -1,11 +1,12 @@
 import { Button } from '@components/Button';
 import { CreateAppModal } from '@components/CreateAppModal/CreateAppModal';
 import { environment } from '@utils/enviroment';
-import { useApps } from '@utils/queries/useApps';
-import { FC, useState } from 'react';
+import { ApplicationListData, useApps } from '@utils/queries/useApps';
+import { formatDistance, isValid } from 'date-fns';
+import { FC, useMemo, useState } from 'react';
 import { GitHub } from 'react-feather';
 import { Link } from 'react-router-dom';
-import { Application } from 'src/types/Application';
+import { decode } from 'sunflake';
 
 const ApplicationShadowCard: FC = () => {
     return (
@@ -13,8 +14,23 @@ const ApplicationShadowCard: FC = () => {
     );
 };
 
+const InlineTimeDistance: FC<{ snowflake: string }> = ({ snowflake }) => {
+    const time_distance = useMemo(() => {
+        const decoded = decode(snowflake);
+        const date_s = Number.parseInt(decoded.time.toString());
+
+        if (!isValid(new Date(date_s))) return 'Unknown';
+
+        if (!decoded.time) return 'Error';
+
+        return formatDistance(new Date(), date_s) + ' ago';
+    }, []);
+
+    return <>{time_distance}</>;
+};
+
 const ApplicationCard: FC<{
-    application: Application & { preview_url?: string };
+    application: ApplicationListData;
 }> = ({ application }) => {
     const [previewImage, setPreviewImage] = useState(true);
 
@@ -48,21 +64,38 @@ const ApplicationCard: FC<{
                     </div>
                 </div>
             )}
-            <div className="p-2">
-                <div className="flex items-center px-2 pt-2 gap-4">
-                    <div className="h-full">
-                        <h2 className="text-lg font-bold">
-                            {application.name}
-                        </h2>
-                        <p className="text-sm opacity-50">
-                            {application.domain_id || 'No Domain Assigned'}
-                        </p>
+            <div className="p-2 pl-4 flex">
+                {application.favicon_url && (
+                    <div className="h-full pr-2 pt-2 flex items-center justify-center">
+                        <img
+                            src={application.favicon_url}
+                            alt=""
+                            className="w-8 aspect-square"
+                        />
                     </div>
-                </div>
+                )}
+                <div className="h-fit flex-1">
+                    <div className="flex items-center gap-4">
+                        <div className="h-full">
+                            <h2 className="text-lg font-bold">
+                                {application.name}
+                            </h2>
+                            <p className="text-sm opacity-50">
+                                {application.domain_id || 'No Domain Assigned'}
+                            </p>
+                        </div>
+                    </div>
 
-                <div className="flex items-center pt-2 px-1 justify-end gap-2">
-                    <p className="opacity-50 w-fit">a minute ago</p>
-                    <GitHub size={'1em'} opacity={0.5} />
+                    {application.last_deploy && (
+                        <div className="flex items-center pt-2 px-1 justify-end gap-2">
+                            <p className="opacity-50 w-fit">
+                                <InlineTimeDistance
+                                    snowflake={application.last_deploy}
+                                />
+                            </p>
+                            <GitHub size={'1em'} opacity={0.5} />
+                        </div>
+                    )}
                 </div>
             </div>
         </Link>
@@ -72,7 +105,6 @@ const ApplicationCard: FC<{
 const AppsList: FC = () => {
     const { data, isLoading, isSuccess } = useApps();
     const [isCreatingApp, setCreatingApp] = useState(false);
-    const [renderURLs, setRenderURLs] = useState({});
 
     return (
         <div className="gap-4 flex flex-col w-full">
