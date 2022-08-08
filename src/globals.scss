@@ -160,3 +160,7 @@ body .themebtn::before {
 body.dark .themebtn::before {
     content: "🌙";
 }
+
+.skeleton {
+    @apply bg-neutral-300 dark:bg-neutral-700 animate-pulse;
+}

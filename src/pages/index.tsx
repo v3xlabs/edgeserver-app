@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 import { decode } from 'sunflake';
 
 const ApplicationShadowCard: FC = () => {
-    return (
-        <div className="card p-2 h-64 bg-neutral-300 dark:bg-neutral-700 shadow-lg animate-pulse" />
-    );
+    return <div className="card p-2 h-64 skeleton shadow-lg" />;
 };
 
 const InlineTimeDistance: FC<{ snowflake: string }> = ({ snowflake }) => {

@@ -2,7 +2,6 @@ import { Button } from '@components/Button';
 import { useApp } from '@utils/queries/useApp';
 import { ApplicationListData } from '@utils/queries/useApps';
 import { useDeployments } from '@utils/queries/useDeployments';
-import Head from 'next/head';
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -57,10 +56,7 @@ const AppDeploymentList: FC<{ app: ApplicationListData }> = ({ app }) => {
             </div>
             {loading &&
                 Array.from({ length: 3 }).map((_, index) => (
-                    <div
-                        className="p-4 border border-neutral-700 bg-neutral-700 card flex h-32 animate-pulse"
-                        key={index}
-                    />
+                    <div className="p-4 skeleton card flex h-32" key={index} />
                 ))}
             {!loading &&
                 deployments &&

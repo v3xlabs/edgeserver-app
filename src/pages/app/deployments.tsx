@@ -32,7 +32,7 @@ export const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
     return (
         <Link
             key={app_id}
-            className="border border-neutral-700 card hover:bg-black-700 flex items-stretch gap-4"
+            className="border border-neutral-700 card hover:bg-neutral-200 dark:hover:bg-black-700 flex items-stretch gap-4"
             to={'/app/' + app_id + '/deployment/' + deployment.deploy_id}
         >
             <div className="h-auto w-auto aspect-video object-cover object-top bg-neutral-700 flex items-center justify-center">
@@ -77,7 +77,7 @@ const DeploymentList: FC = () => {
             {loading &&
                 Array.from({ length: 4 }).map((_, index) => (
                     <div
-                        className="p-4 border border-neutral-700 bg-neutral-700 card flex h-32 animate-pulse"
+                        className="p-4 border border-neutral-700 skeleton card flex h-32"
                         key={index}
                     />
                 ))}

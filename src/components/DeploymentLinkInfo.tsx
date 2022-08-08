@@ -62,11 +62,13 @@ export const DeploymentLinkInfo: FC<{
                         'Error Loading Github Context'}
                 </h3>
 
-                <p className="text-sm text-neutral-300">{context.data.actor}</p>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                    {context.data.actor}
+                </p>
 
                 <a
                     href={context.data?.commit?.url || '#'}
-                    className="text-xs text-neutral-400 hover:text-neutral-500"
+                    className="text-xs text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-500"
                     onClick={(event_) => {
                         event_.preventDefault();
                         window.open(context.data.commit.url);
