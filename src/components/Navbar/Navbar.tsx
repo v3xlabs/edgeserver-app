@@ -61,7 +61,7 @@ export const Navbar: FC = () => {
             <div className="flex justify-between w-full border-b border-neutral-300 dark:border-neutral-700 h-16 dark:bg-black-800 bg-neutral-50 relative z-50">
                 <div className="flex">
                     <Link
-                        className="flex gap-2 h-full items-center px-4 border-r border-neutral-300 dark:border-neutral-700 hover:bg-neutral-800 cursor-pointer"
+                        className="flex gap-2 h-full items-center px-4 border-r border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer"
                         to="/"
                     >
                         <img src={logo} alt="" className="w-6 h-6" />
