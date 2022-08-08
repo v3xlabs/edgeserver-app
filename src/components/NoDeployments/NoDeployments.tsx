@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 export const NoDeployments: FC<{ app_id: string }> = ({ app_id }) => {
     return (
-        <div className="w-full border border-neutral-700 p-4 flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
             <h2 className="text-2xl">Make your first deploy 🚀</h2>
             <p>Now that you have created your app you can deploy to it!</p>
             <h3 className="text-xl mt-2">
@@ -42,7 +42,9 @@ export const NoDeployments: FC<{ app_id: string }> = ({ app_id }) => {
                     '    app_id: "' +
                     app_id +
                     '"\n' +
-                    '    server: https://api.edgeserver.io\n' +
+                    '    server: ' +
+                    environment.API_URL +
+                    '\n' +
                     '    token: ${{ secrets.SIGNAL_TOKEN }}\n' +
                     '    directory: dist'}
             </pre>
