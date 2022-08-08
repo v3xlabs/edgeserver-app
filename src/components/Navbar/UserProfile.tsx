@@ -4,7 +4,7 @@ import { cx } from '@utils/cx';
 import { formatAddress } from '@utils/formatAddress';
 import { gradientAvatar } from '@utils/gradientAvatar';
 import { useENS } from '@utils/queries/useENS';
-import { toggleTheme, useTheme } from '@utils/useTheme';
+import { toggleTheme } from '@utils/useTheme';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
