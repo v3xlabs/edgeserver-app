@@ -45,7 +45,7 @@ export const NoDeployments: FC<{ app_id: string }> = ({ app_id }) => {
                     '    server: ' +
                     environment.API_URL +
                     '\n' +
-                    '    token: ${{ secrets.SIGNAL_TOKEN }}\n' +
+                    '    token: ${{ secrets.EDGESERVER_TOKEN }}\n' +
                     '    directory: dist'}
             </pre>
             <h3 className="text-xl mt-2">Manual REST API</h3>
