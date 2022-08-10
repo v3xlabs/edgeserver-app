@@ -6,6 +6,7 @@ import { persist } from 'zustand/middleware';
 
 import { environment } from './enviroment';
 import { deleteSelfAuthKey } from './queries/deleteAuthKey';
+import { UnauthorizedError } from './UnauthorizedError';
 
 type JWTData = {
     token: string;
@@ -80,7 +81,7 @@ export const useAuth = () => {
     const { data, isLoading, isSuccess } = useAccount();
     const whitelisted = useWhitelist(data?.address || '');
 
-    const { data: userData } = useQuery<{ admin: boolean }>(
+    const { data: userData, error } = useQuery<{ admin: boolean }>(
         '/user/' + data?.address,
         async () => {
             const userDataRequest = await fetch(
@@ -91,7 +92,10 @@ export const useAuth = () => {
                 }
             );
 
-            if (userDataRequest.status != 200) return;
+            if (userDataRequest.status == 403) throw new UnauthorizedError();
+
+            if (userDataRequest.status != 200)
+                throw new Error('Status Code ' + userDataRequest.status);
 
             return await userDataRequest.json();
         }
@@ -113,7 +117,7 @@ export const useAuth = () => {
     if (!whitelisted)
         return { state: 'not-whitelisted', address: data.address };
 
-    if (!token) return { state: 'no-token', address: data.address };
+    if (!token || error) return { state: 'no-token', address: data.address };
 
     return { state: 'authenticated', address: data.address, userData };
 };
