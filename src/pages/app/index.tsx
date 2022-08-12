@@ -1,5 +1,6 @@
 import { Button } from '@components/Button';
 import { NoDeployments } from '@components/NoDeployments/NoDeployments';
+import { ReRender } from '@components/ReRender';
 import { Tab, Tabs } from '@components/Tabs/Tabs';
 import { useApp } from '@utils/queries/useApp';
 import { ApplicationListData } from '@utils/queries/useApps';
@@ -47,6 +48,10 @@ export const AppPage: FC = () => {
                     Owner: {app.owner_id}
                     <br />
                     Domain: {app.domain_id}
+                    <br />
+                    <div>
+                        <ReRender app_id={app.app_id} />
+                    </div>
                 </Tab>
             </Tabs>
 
