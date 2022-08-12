@@ -52,7 +52,9 @@ export const DeploymentLink: FC<{ deployment: Deployment; app_id: string }> = ({
                     />
                 )}
                 {!previewImage && (
-                    <div className="brightness-75 font-bold">?</div>
+                    <div className="brightness-75 font-bold w-64 text-center">
+                        ?
+                    </div>
                 )}
             </div>
             <div className="flex justify-between p-4 flex-1">
