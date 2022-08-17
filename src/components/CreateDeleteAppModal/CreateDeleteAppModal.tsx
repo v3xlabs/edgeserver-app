@@ -38,7 +38,7 @@ export const CreateDeleteAppModal: FC<{
     app: ApplicationListData;
     onClose: () => void;
 }> = ({ onClose, app }) => (
-    <Modal label={'Sure u not drunk?'} onClose={() => onClose()}>
+    <Modal label={'Caution!'} onClose={() => onClose()}>
         Are you totally sure you wanna completely delete{' '}
         <span className="font-bold">{app.name}</span>?
         <DeleteButton app_id={app.app_id} />
