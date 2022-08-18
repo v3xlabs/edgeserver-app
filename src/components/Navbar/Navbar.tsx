@@ -66,8 +66,15 @@ export const Navbar: FC = () => {
                     >
                         <img src={logo} alt="" className="w-6 h-6" />
                         {/* <div className="w-4 h-4 bg-white cursor-pointer"></div> */}
-                        <div className="to-pink-800 from-purple-700 brightness-150 bg-gradient-to-br bg-clip-text text-transparent font-bold">
-                            Edgeserver
+                        <div>
+                            <div className="to-pink-800 from-purple-700 brightness-150 bg-gradient-to-br bg-clip-text text-transparent font-bold leading-none">
+                                Edgeserver
+                            </div>
+
+                            <div className="leading-none text-sm">
+                                <span className="text-neutral-400">by </span>
+                                edgelabs
+                            </div>
                         </div>
                     </Link>
 
