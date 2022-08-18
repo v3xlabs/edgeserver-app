@@ -284,7 +284,7 @@ export const CreateKeyModal: FC<{ onClose: () => void }> = ({ onClose }) => {
                     <div className="flex mt-2">
                         <input
                             id="generated_token"
-                            className="p-2 bg-black-500 w-full block overflow-hidden"
+                            className="p-2 dark:bg-black-500 bg-slate-300 w-full block overflow-hidden"
                             value={generatedToken}
                         />
                         <button
