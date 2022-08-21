@@ -1,14 +1,37 @@
 import { Button } from '@components/Button';
+import { CreateDeleteAppModal } from '@components/CreateDeleteAppModal/CreateDeleteAppModal';
 import { NoDeployments } from '@components/NoDeployments/NoDeployments';
 import { ReRender } from '@components/ReRender';
 import { Tab, Tabs } from '@components/Tabs/Tabs';
 import { useApp } from '@utils/queries/useApp';
 import { ApplicationListData } from '@utils/queries/useApps';
 import { useDeployments } from '@utils/queries/useDeployments';
-import { FC, useEffect } from 'react';
+import { useJWT } from '@utils/useAuth';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DeploymentLink } from './deployments';
+
+const DeleteButton: FC<{ app: ApplicationListData }> = ({ app }) => {
+    const { token } = useJWT();
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+    return (
+        <div>
+            <Button
+                onClick={() => setDeleteModalOpen(true)}
+                label="Delete this application"
+                variant="delete"
+            ></Button>
+            {deleteModalOpen && (
+                <CreateDeleteAppModal
+                    app={app}
+                    onClose={() => setDeleteModalOpen(false)}
+                />
+            )}
+        </div>
+    );
+};
 
 export const AppPage: FC = () => {
     const app = useApp();
@@ -34,7 +57,12 @@ export const AppPage: FC = () => {
                 <h2 className="text-2xl flex-grow block">{app.name}</h2>
             </div>
             <Tabs
-                labels={['⚙️ Setup', '🔎 Information', '🐛 Debug']}
+                labels={[
+                    '🔧 Setup',
+                    '🔎 Information',
+                    '🐛 Debug',
+                    '⚙️ Settings',
+                ]}
                 defaultTab={app.last_deploy ? 1 : 0}
             >
                 <Tab>
@@ -51,6 +79,24 @@ export const AppPage: FC = () => {
                     <br />
                     <div>
                         <ReRender app_id={app.app_id} />
+                    </div>
+                </Tab>
+                <Tab>
+                    Welcome to the settings! <br />
+                    <h2 className="text-2xl mt-4">Danger Zone</h2>
+                    <div className="bg-red-500 outline outline-1 outline-red-400 rounded-md max-w-2xl mt-4 bg-opacity-10 text-black dark:text-white p-4">
+                        <div className="flex justify-between items-center">
+                            <div className="flex-grow">
+                                <h3 className="font-bold">
+                                    Delete Application
+                                </h3>
+                                <div>
+                                    Once you delete an application, there is no
+                                    going back.
+                                </div>
+                            </div>
+                            <DeleteButton app={app} />
+                        </div>
                     </div>
                 </Tab>
             </Tabs>
