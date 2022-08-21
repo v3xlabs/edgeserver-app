@@ -28,7 +28,7 @@ const DeleteButton: FC<{ app_id: string }> = ({ app_id }) => {
     return (
         <Button
             onClick={() => mutate()}
-            label="Yoink!"
+            label="Yes, delete my app"
             variant="delete"
         ></Button>
     );
@@ -39,8 +39,10 @@ export const CreateDeleteAppModal: FC<{
     onClose: () => void;
 }> = ({ onClose, app }) => (
     <Modal label={'Caution!'} onClose={() => onClose()}>
-        Are you totally sure you wanna completely delete{' '}
+        Are you totally sure you want to delete{' '}
         <span className="font-bold">{app.name}</span>?
-        <DeleteButton app_id={app.app_id} />
+        <div className="w-full flex justify-end mt-4">
+            <DeleteButton app_id={app.app_id} />
+        </div>
     </Modal>
 );

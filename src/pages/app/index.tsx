@@ -17,10 +17,10 @@ const DeleteButton: FC<{ app: ApplicationListData }> = ({ app }) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
     return (
-        <div id="funnydivname">
+        <div>
             <Button
                 onClick={() => setDeleteModalOpen(true)}
-                label="DELETE"
+                label="Delete this application"
                 variant="delete"
             ></Button>
             {deleteModalOpen && (
@@ -83,12 +83,20 @@ export const AppPage: FC = () => {
                 </Tab>
                 <Tab>
                     Welcome to the settings! <br />
-                    <div className="bg-red-500 rounded-md w-fit mt-4 bg-opacity-10 text-black dark:text-white p-4">
-                        <h2>⚠️ Danger Zone!</h2>
-                        <h3>
-                            Delete Application
+                    <h2 className="text-2xl mt-4">Danger Zone</h2>
+                    <div className="bg-red-500 outline outline-1 outline-red-400 rounded-md max-w-2xl mt-4 bg-opacity-10 text-black dark:text-white p-4">
+                        <div className="flex justify-between items-center">
+                            <div className="flex-grow">
+                                <h3 className="font-bold">
+                                    Delete Application
+                                </h3>
+                                <div>
+                                    Once you delete an application, there is no
+                                    going back.
+                                </div>
+                            </div>
                             <DeleteButton app={app} />
-                        </h3>
+                        </div>
                     </div>
                 </Tab>
             </Tabs>
